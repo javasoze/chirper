@@ -7,7 +7,7 @@ import java.io.BufferedReader
 
 import org.json._
 
-import com.linkedin.led.twitter.Config
+import com.linkedin.led.twitter.config._
 import com.linkedin.led.twitter.streaming.StreamProcessor
 
 
@@ -21,7 +21,6 @@ import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
 
 class ChirperStreamProcessor extends StreamProcessor{
-	val voldurl = Config.readString("voldemort.url")
 	val kafkaHost = Config.readString("kafka.host")
 	val kafkaPort = Config.readInt("kafka.port")
 	val kafkaTopic = Config.readString("kafka.topic")

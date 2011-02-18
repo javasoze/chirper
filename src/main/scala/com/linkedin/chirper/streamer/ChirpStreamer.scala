@@ -1,6 +1,6 @@
 package com.linkedin.chirper.streamer
 
-import com.linkedin.led.twitter.Config
+import com.linkedin.led.twitter.config._
 import com.linkedin.led.twitter.streaming.StreamingClient
 
 object ChirpStream {
