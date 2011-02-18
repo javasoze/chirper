@@ -22,6 +22,6 @@ class ChirperServlet extends ScalatraServlet {
    */
   get("/") {
     contentType = "text/html"
-    "Welcome to the Signal Backend API"
+    "Welcome to the Chirper backend API"
   }
 }
