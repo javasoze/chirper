@@ -39,8 +39,7 @@ class ChirperStreamProcessor extends StreamProcessor{
 		val jsonObj = new JSONObject(line)
 		val id = jsonObj.getString("idStr")
 		tweetStore(id) = line
-	    val text = jsonObj.getString("text")
-	    kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(text.getBytes("UTF8"))))
+	    kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes("UTF8"))))
 	    line = reader.readLine()
 	  }
 	  is.close
