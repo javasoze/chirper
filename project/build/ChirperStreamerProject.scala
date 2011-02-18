@@ -9,6 +9,14 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val json = "org.json" % "json" % "20080701"
   val scalaj_collection = "org.scalaj" %% "scalaj-collection" % "1.0"
   val configgy   = "net.lag" % "configgy" % "1.5.2" from "http://repo.bumnetworks.com/snapshots/net/lag/configgy/1.5.2/configgy-1.5.2.jar"
+  val commonsIo = "commons-io" % "commons-io" % "2.0.1"
+  val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1"
+  val jdom = "org.jdom" % "jdom" % "1.1"
+  val googleCollections = "com.google.collections" % "google-collections" % "1.0"
+ // val bdb =
+ // val jetty = 
+ // val jetty-util =
+ // val zookeeper  = "org.apache.zookeeper" % "zookeeper" % "3.3.1"
 
   // Logging
   System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
@@ -23,7 +31,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val scalateVersion = "1.2"
   val scalaTestVersion = "1.2-for-scala-2.8.0.final-SNAPSHOT"
 
-  val jetty6 = "org.mortbay.jetty" % "jetty" % jettyVersion % "test"
+  val jetty6 = "org.mortbay.jetty" % "jetty" % jettyVersion
   val servletApi = "javax.servlet" % "servlet-api" % servletVersion % "provided"
 
   val scalaTest = "org.scalatest" % "scalatest" % scalaTestVersion % "test"
@@ -42,4 +50,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
 
   // Show unchecked errors when compiling
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
+
+  override def fork =
+    forkRun("-Xmx2G" :: Nil)
 }
