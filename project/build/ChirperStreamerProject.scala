@@ -11,6 +11,8 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val configgy   = "net.lag" % "configgy" % "1.5.2" from "http://repo.bumnetworks.com/snapshots/net/lag/configgy/1.5.2/configgy-1.5.2.jar"
   val commonsIo = "commons-io" % "commons-io" % "2.0.1"
   val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1"
+
+  val commonsLang = "commons-lang" % "commons-lang" % "2.5"
   val jdom = "org.jdom" % "jdom" % "1.1"
   val googleCollections = "com.google.collections" % "google-collections" % "1.0"
  // val bdb =
@@ -52,5 +54,5 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
 
   override def fork =
-    forkRun("-Xmx2G" :: Nil)
+    forkRun("-Xmx100M" :: Nil)
 }
