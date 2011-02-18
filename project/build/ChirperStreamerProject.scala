@@ -7,6 +7,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultProject(info) wit
   val httpclient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val logging    = "commons-logging" % "commons-logging" % "1.1"
   val json = "org.json" % "json" % "20080701"
+  val scalaj_collection = "org.scalaj" %% "scalaj-collection" % "1.0"
   // Logging
   System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
   // System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
