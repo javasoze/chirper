@@ -88,7 +88,9 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	  var statusJsonObj = new JSONObject();
 	  if (statusString!=null){
 		try{
-		  statusJsonObj = new JSONObject(statusString)
+		  val voldObj = new JSONObject(statusString)
+		  val tweetString = voldObj.getString("value")
+		  statusJsonObj = new JSONObject(tweetString)
 		}
 		catch{
 		  case e : Exception => e.printStackTrace()
