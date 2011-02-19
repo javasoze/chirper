@@ -13,6 +13,9 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val commonsIo = "commons-io" % "commons-io" % "2.0.1" % "runtime"
   val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1" % "runtime"
 
+
+  val commonsConfiguration = "commons-configuration" % "commons-configuration" % "1.6" % "compile"
+
   val commonsLang = "commons-lang" % "commons-lang" % "2.5" % "runtime"
   val jdom = "org.jdom" % "jdom" % "1.1" % "runtime"
   val googleCollections = "com.google.collections" % "google-collections" % "1.0" % "runtime"
