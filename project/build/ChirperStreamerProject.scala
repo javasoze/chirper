@@ -10,7 +10,24 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val scalaj_collection = "org.scalaj" %% "scalaj-collection" % "1.0"
   val configgy   = "net.lag" % "configgy" % "1.5.2" from "http://repo.bumnetworks.com/snapshots/net/lag/configgy/1.5.2/configgy-1.5.2.jar"
 
-  // Logging
+  val commonsIo = "commons-io" % "commons-io" % "2.0.1" % "runtime"
+  val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1" % "runtime"
+
+
+  val commonsConfiguration = "commons-configuration" % "commons-configuration" % "1.6" % "compile"
+
+  val commonsLang = "commons-lang" % "commons-lang" % "2.5" % "runtime"
+  val jdom = "org.jdom" % "jdom" % "1.1" % "runtime"
+  val googleCollections = "com.google.collections" % "google-collections" % "1.0" % "runtime"
+
+  val fastutil = "fastutil" % "fastutil" % "5.0.5"
+  val lucene = "org.apache.lucene" % "lucene-core" % "2.9.1"
+  val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3" % "runtime"
+  val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
+
+  val netty = "org.jboss.netty" % "netty" % "3.2.3.Final" % "runtime"
+  val spring = "org.springframework" % "spring" % "2.5.5" % "runtime"
+// Logging
   System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
   // System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
   // System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
@@ -39,7 +56,11 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val sonatypeNexusSnapshots = "Sonatype Nexus Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   val sonatypeNexusReleases  = "Sonatype Nexus Releases" at "https://oss.sonatype.org/content/repositories/releases"
   val fuseSourceSnapshots    = "FuseSource Snapshot Repository" at "http://repo.fusesource.com/nexus/content/repositories/snapshots"
+  val jbossReleases = "Jboss releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
 
   // Show unchecked errors when compiling
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
+  
+  override def fork = forkRun("-Xmx100M" :: Nil)
+  override def runClasspath = super.runClasspath +++ ("config" / "log4j")
 }

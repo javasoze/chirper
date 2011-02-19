@@ -35,11 +35,18 @@ class ChirperStreamProcessor extends StreamProcessor{
 	  val reader: BufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"))
 	  var line = reader.readLine()
 	  while (line != null) {
-		val jsonObj = new JSONObject(line)
-		val id = jsonObj.getString("idStr")
-		tweetStore(id) = line
-	    kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes("UTF8"))))
-	    line = reader.readLine()
+		try{
+		  println(line)
+		  val jsonObj = new JSONObject(line)
+		  val id = jsonObj.getString("id_str")
+	      kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes("UTF8"))))
+		  tweetStore(id) = line  
+        }
+        catch{
+	      case je: JSONException => 
+	      case e: Exception => e.printStackTrace()
+        }
+        line = reader.readLine()
 	  }
 	  is.close
 	}
