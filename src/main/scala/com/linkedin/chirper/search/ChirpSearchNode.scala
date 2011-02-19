@@ -13,6 +13,13 @@ import proj.zoie.hourglass.impl.HourGlassScheduler;
 import proj.zoie.hourglass.impl.HourGlassScheduler.FREQUENCY;
 import proj.zoie.impl.indexing.ZoieConfig;
 
+import java.util._
+import java.text.SimpleDateFormat
+
+import com.browseengine.bobo.facets.FacetHandler
+import com.browseengine.bobo.facets.data.PredefinedTermListFactory
+import com.browseengine.bobo.facets.impl.RangeFacetHandler
+
 import com.linkedin.norbert.javacompat.cluster.ClusterClient;
 import com.linkedin.norbert.javacompat.cluster.ZooKeeperClusterClient;
 import com.linkedin.norbert.javacompat.network.NettyNetworkServer;
@@ -47,8 +54,12 @@ object ChirpSearchNode{
 	  val idxDir = new File(Config.readString("search.node.index.dir"))
 	  val interpreter = new ChirpJSONInterpreter();
 	
+	  val handlerList = new java.util.ArrayList[FacetHandler[_]]()
+	  val rangeList = new java.util.ArrayList[java.lang.String]()
+	  val timeHandler = new RangeFacetHandler("time",new PredefinedTermListFactory[java.lang.Long](classOf[java.lang.Long], "0000000000000000000000000000000000000000"),rangeList)
+	  handlerList.add(timeHandler)
 	  // rolls daily at midnight, keep 7 days
-	  val hfFactory = new SenseiHourglassFactory[JSONObject, DefaultZoieVersion](idxDir,interpreter,new SenseiIndexReaderDecorator(), zoieConfig, "00 00 00", 7, FREQUENCY.DAILY)
+	  val hfFactory = new SenseiHourglassFactory[JSONObject, DefaultZoieVersion](idxDir,interpreter,new SenseiIndexReaderDecorator(handlerList,null), zoieConfig, "00 00 00", 7, FREQUENCY.DAILY)
 	
 	  val clusterName = Config.readString("zookeeper.cluster")
       val zkurl = Config.readString("zookeeper.url")
