@@ -9,26 +9,22 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val json = "org.json" % "json" % "20080701"
   val scalaj_collection = "org.scalaj" %% "scalaj-collection" % "1.0"
   val configgy   = "net.lag" % "configgy" % "1.5.2" from "http://repo.bumnetworks.com/snapshots/net/lag/configgy/1.5.2/configgy-1.5.2.jar"
-  val commonsIo = "commons-io" % "commons-io" % "2.0.1"
-  val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1"
 
-  val commonsLang = "commons-lang" % "commons-lang" % "2.5"
-  val jdom = "org.jdom" % "jdom" % "1.1"
-  val googleCollections = "com.google.collections" % "google-collections" % "1.0"
-  val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
-  val avro = "org.apache.avro" % "avro" % "1.4.0"
+  val commonsIo = "commons-io" % "commons-io" % "2.0.1" % "runtime"
+  val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1" % "runtime"
+
+  val commonsLang = "commons-lang" % "commons-lang" % "2.5" % "runtime"
+  val jdom = "org.jdom" % "jdom" % "1.1" % "runtime"
+  val googleCollections = "com.google.collections" % "google-collections" % "1.0" % "runtime"
+
   val fastutil = "fastutil" % "fastutil" % "5.0.5"
   val lucene = "org.apache.lucene" % "lucene-core" % "3.0.2"
-  val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3"
-  val netty = "org.jboss.netty" % "netty" % "3.2.3.Final"
-  val spring = "org.springframework" % "spring" % "2.5.5" % "runtime"
-  //val log4j = "log4j" % "log4j" % "1.2.15" % "runtime"
- // val bdb =
- // val jetty = 
- // val jetty-util =
- // val zookeeper  = "org.apache.zookeeper" % "zookeeper" % "3.3.1"
+  val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3" % "runtime"
+  val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
 
-  // Logging
+  val netty = "org.jboss.netty" % "netty" % "3.2.3.Final" % "runtime"
+  val spring = "org.springframework" % "spring" % "2.5.5" % "runtime"
+// Logging
   System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
   // System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
   // System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
@@ -41,7 +37,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val scalateVersion = "1.2"
   val scalaTestVersion = "1.2-for-scala-2.8.0.final-SNAPSHOT"
 
-  val jetty6 = "org.mortbay.jetty" % "jetty" % jettyVersion
+  val jetty6 = "org.mortbay.jetty" % "jetty" % jettyVersion % "test"
   val servletApi = "javax.servlet" % "servlet-api" % servletVersion % "provided"
 
   val scalaTest = "org.scalatest" % "scalatest" % scalaTestVersion % "test"
@@ -61,7 +57,4 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
 
   // Show unchecked errors when compiling
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
-
-  override def fork =
-    forkRun("-Xmx100M" :: Nil)
 }
