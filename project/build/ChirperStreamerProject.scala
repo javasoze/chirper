@@ -21,7 +21,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val googleCollections = "com.google.collections" % "google-collections" % "1.0" % "runtime"
 
   val fastutil = "fastutil" % "fastutil" % "5.0.5"
-  val lucene = "org.apache.lucene" % "lucene-core" % "3.0.2"
+  val lucene = "org.apache.lucene" % "lucene-core" % "2.9.1"
   val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3" % "runtime"
   val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
 
@@ -60,4 +60,6 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
 
   // Show unchecked errors when compiling
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
+
+  override def runClasspath = super.runClasspath +++ ("config" / "log4j")
 }

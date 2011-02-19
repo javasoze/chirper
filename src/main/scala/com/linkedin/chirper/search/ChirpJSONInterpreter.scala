@@ -10,7 +10,7 @@ import org.apache.lucene.document.Field.Index
 class ChirpJSONInterpreter extends JSONDataInterpreter{
 
 	override def extractUID(obj:JSONObject): Long = {
-	  val id = obj.getString("text").toLong
+	  val id = obj.getString("id_str").toLong
 	  id
 	}
 	

@@ -21,6 +21,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   val timeout = 30000
 
   val senseiSvc = new ClusteredSenseiServiceImpl(zkurl,timeout,clusterName)
+  senseiSvc.start()
 
   ChirpSearchNode.addShutdownHook{ senseiSvc.shutdown }
 

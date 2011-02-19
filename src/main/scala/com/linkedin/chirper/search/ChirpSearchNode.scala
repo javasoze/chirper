@@ -37,7 +37,7 @@ object ChirpSearchNode{
 	  val decorator = new SenseiIndexReaderDecorator()
 	  val zoieConfig = new ZoieConfig[DefaultZoieVersion](new DefaultZoieVersionFactory());
 	
-	  val queryParser = new QueryParser(Version.LUCENE_30,"contents",new StandardAnalyzer(Version.LUCENE_29))
+	  val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
 	  val queryBuilderFactory = new SimpleQueryBuilderFactory(queryParser)
 	
 	  val nodeid = Config.readInt("search.node.id")
