@@ -15,6 +15,14 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val commonsLang = "commons-lang" % "commons-lang" % "2.5"
   val jdom = "org.jdom" % "jdom" % "1.1"
   val googleCollections = "com.google.collections" % "google-collections" % "1.0"
+  val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
+  val avro = "org.apache.avro" % "avro" % "1.4.0"
+  val fastutil = "fastutil" % "fastutil" % "5.0.5"
+  val lucene = "org.apache.lucene" % "lucene-core" % "3.0.2"
+  val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3"
+  val netty = "org.jboss.netty" % "netty" % "3.2.3.Final"
+  val spring = "org.springframework" % "spring" % "2.5.5" % "runtime"
+  //val log4j = "log4j" % "log4j" % "1.2.15" % "runtime"
  // val bdb =
  // val jetty = 
  // val jetty-util =
@@ -49,6 +57,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val sonatypeNexusSnapshots = "Sonatype Nexus Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   val sonatypeNexusReleases  = "Sonatype Nexus Releases" at "https://oss.sonatype.org/content/repositories/releases"
   val fuseSourceSnapshots    = "FuseSource Snapshot Repository" at "http://repo.fusesource.com/nexus/content/repositories/snapshots"
+  val jbossReleases = "Jboss releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
 
   // Show unchecked errors when compiling
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
