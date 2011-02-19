@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Chirper</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="/css/baseline.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link  href="http://fonts.googleapis.com/css?family=Coming+Soon:regular" rel="stylesheet" type="text/css" >
+  <link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css" >
+  <link href='http://fonts.googleapis.com/css?family=Puritan' rel='stylesheet' type='text/css'>
+  <script src="/js/underscore.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/backbone.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+  <div id="main" class="main">
+    <div class="width4">
+      <!-- Search app -->
+      <div class="column width2 first chirper-search-app" id="chirper-search-app">
+        <div class="header">
+          <h1>Chirper</h1>
+        </div>
+        <div class="content">
+          <form action="/">
+            <input type="text" name="q" autocomplete="off" id="q" placeholder="Search on Chirper" />
+            <button class="search-button">Search</button>
+          </form>
+        </div>
+      </div>
+      <!-- End Search app -->
+      <!-- Search Tech -->
+      <div class="column width2 last chirper-search-tech" id="chirper-search-tech">
+        <div class="header">
+          <h1>The Tools</h1>
+        </div>
+        <div class="content">
+          <div class="tech">
+            <h2>Voldemort</h2>
+            <p>
+              The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- End Search Tech -->
+      <div class="main-divider"></div>
+      
+    </div>
+  </div>
+</body>
+</html>

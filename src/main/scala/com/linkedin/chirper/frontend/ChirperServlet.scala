@@ -2,8 +2,12 @@ package com.linkedin.chirper.servlet
 
 import javax.servlet._
 import org.scalatra._
+import org.scalatra._
+import scalate.ScalateSupport
+import org.fusesource.scalate._
+import org.fusesource.scalate.TemplateEngine
 
-class ChirperServlet extends ScalatraServlet {
+class ChirperServlet extends ScalatraServlet with ScalateSupport {
   var t1: Long = 0
   var t2: Long = 0
 
@@ -22,6 +26,6 @@ class ChirperServlet extends ScalatraServlet {
    */
   get("/") {
     contentType = "text/html"
-    "Welcome to the Chirper backend API"
+    templateEngine.layout("index.ssp")
   }
 }
