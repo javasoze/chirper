@@ -60,6 +60,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
 
   // Show unchecked errors when compiling
   override def compileOptions = super.compileOptions ++ Seq(Unchecked)
-
+  
+  override def fork = forkRun("-Xmx100M" :: Nil)
   override def runClasspath = super.runClasspath +++ ("config" / "log4j")
 }
