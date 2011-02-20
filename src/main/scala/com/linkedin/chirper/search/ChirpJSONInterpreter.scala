@@ -7,13 +7,16 @@ import java.text._
 import org.apache.lucene.document.Field.Store
 import org.apache.lucene.document.Field.Index
 
+// Converts a json object to a Lucene document
 class ChirpJSONInterpreter extends JSONDataInterpreter{
 
+    // get the UID from a tweet
 	override def extractUID(obj:JSONObject): Long = {
 	  val id = obj.getString("id_str").toLong
 	  id
 	}
 	
+	// build a Lucene doc, we only gonna index the tweet text and the time
 	override def  buildDoc(obj:JSONObject): Document = {
 	  val doc = new Document()
 	

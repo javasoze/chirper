@@ -62,10 +62,15 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	val q = params.getOrElse("q", "")
 	val offset = params.getOrElse("offset", "0").toInt
 	val count = params.getOrElse("count", Config.readString("search.perPage")).toInt
+	
+	// Build a search request
 	val req = new SenseiRequest()
+	// Paging
 	req.setOffset(offset)
 	req.setCount(count)
 	req.setFetchStoredFields(false)
+	
+	// Parse a query
 	if (q != null && q.length() > 0) {
 	      try {
 	        val sq = new StringQuery(q)
@@ -74,9 +79,14 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	        case e: Exception => e.printStackTrace()
 	      }
 	}
+	
+	// sort by time
 	req.addSortField(new SortField("time", SortField.CUSTOM, true))
 	
+	// do search
 	val results = senseiSvc.doQuery(req) // no facets for this
+	
+	// build a json object
 	val resultJSON = DefaultSenseiJSONServlet.buildJSONResult(req,results)
 	val hitsArray = resultJSON.getJSONArray("hits")
 	val hitsArrayLen = hitsArray.length()
@@ -88,6 +98,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	  var statusJsonObj = new JSONObject();
 	  if (statusString!=null){
 		try{
+		  // go to voldemort store to get the original tweet text for display
 		  val voldObj = new JSONObject(statusString)
 		  val tweetString = voldObj.getString("value")
 		  statusJsonObj = new JSONObject(tweetString)

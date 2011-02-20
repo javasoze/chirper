@@ -20,6 +20,7 @@ import voldemort.client.SocketStoreClientFactory
 import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
 
+// processes each tweet from the streamer
 class ChirperStreamProcessor extends StreamProcessor{
 	val kafkaHost = Config.readString("kafka.host")
 	val kafkaPort = Config.readInt("kafka.port")
@@ -35,11 +36,15 @@ class ChirperStreamProcessor extends StreamProcessor{
 	  val reader: BufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"))
 	  var line = reader.readLine()
 	  while (line != null) {
+		// for each tweet
 		try{
+		  // output to console
 		  println(line)
 		  val jsonObj = new JSONObject(line)
 		  val id = jsonObj.getString("id_str")
+		  // send to kafka
 	      kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes("UTF8"))))
+	      // send to voldemort store
 		  tweetStore(id) = line  
         }
         catch{
