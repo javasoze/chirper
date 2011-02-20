@@ -34,6 +34,8 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(voldemortUrl));
   val tweetStore: StoreClient[String, String] = factory.getStoreClient[String, String](voldemortStore)
 
+  val defaultPageSize = Config.readString("search.perPage")
+
   val senseiSvc = new ClusteredSenseiServiceImpl(zkurl,timeout,clusterName)
   senseiSvc.start()
 
@@ -62,7 +64,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	// params
 	val q = params.getOrElse("q", "")
 	val offset = params.getOrElse("offset", "0").toInt
-	val count = params.getOrElse("count", Config.readString("search.perPage")).toInt
+	val count = params.getOrElse("count", defaultPageSize).toInt
 	
 	// Build a search request
 	val req = new SenseiRequest()
@@ -85,7 +87,9 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	req.addSortField(new SortField("time", SortField.CUSTOM, true))
 	
 	// do search
+	val searchStart = System.currentTimeMillis()
 	val results = senseiSvc.doQuery(req) // no facets for this
+	val searchEnd = System.currentTimeMillis()
 	
 	// build a json object
 	val resultJSON = DefaultSenseiJSONServlet.buildJSONResult(req,results)
@@ -115,6 +119,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	val fetchEnd = System.currentTimeMillis()
 	val end = System.currentTimeMillis()
 	resultJSON.put("fetchtime",(fetchEnd-fetchStart))
+	resultJSON.put("searchtime",(searchEnd-searchStart))
 	resultJSON.put("totaltime",(end-start))
 	resultJSON.toString()
   }
