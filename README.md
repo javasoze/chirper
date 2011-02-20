@@ -37,7 +37,7 @@ The order of class to be run are:
 1. [2] - Zookeeper
 2. [3] - Kafka
 3. [4] - Voldemort
-4. [1] - Streamer
+4. [1] - Streamer (Make sure your twitter username/password is set in the [config file](https://github.com/javasoze/chirper/blob/master/config/TwitterStreamer.conf))
 5. [5] - Search Node
 
 Each of the components are pre-configured, details see [configs](https://github.com/javasoze/chirper/tree/master/config).
