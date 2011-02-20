@@ -63,6 +63,23 @@ body {
   padding-top: 18px;
   text-align: center;
 }
+
+#main .chirper-search-app .tweet .user {
+  font-size: 14px;
+  font-weight: bold;
+}
+#main .chirper-search-app .tweet .user img {
+  border-radius: 8px;
+  float: left;
+  margin-right: 9px;
+  border-top-left-radius: 8px 8px;
+  border-top-right-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+  border-bottom-left-radius: 8px 8px;
+}
+#main .chirper-search-app .tweet {
+  margin-bottom: 18px;
+}
 #main .chirper-search-tech {
   border-top-right-radius: 8px 8px;
   border-bottom-right-radius: 8px 8px;

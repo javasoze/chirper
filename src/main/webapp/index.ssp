@@ -12,6 +12,7 @@
   <script src="/js/underscore.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/backbone.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
@@ -25,10 +26,12 @@
           </p>
         </div>
         <div class="content">
-          <form action="/">
+          <form action="/" id="search-form">
             <input type="text" name="q" autocomplete="off" id="q" placeholder="Search on Chirper" />
             <button class="search-button">Search</button>
           </form>
+          <ul id="tweets">
+          </ul>
         </div>
       </div>
       <!-- End Search app -->
@@ -73,8 +76,16 @@
   </div>
 
 <!-- Mustache JS templates -->
-<script type="text/html" charset="utf-8" id="tweet">
-  <div class="tweet">{{screenName}} {{body}}</div>
+<script type="text/html" charset="utf-8" id="tweet-view">
+  <div class="tweet">
+  {{#status}}
+    {{#user}}
+      <div class="user"><img src="{{profile_image_url}}"/> {{screen_name}}</div>
+    {{/user}}
+    <div class="body">{{text}}</div>
+    <div class="ts">{{created_at}}</div>
+  {{/status}}
+  </div>
 </script>
 <!-- End Mustache JS templates -->
 
