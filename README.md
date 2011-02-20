@@ -51,5 +51,5 @@ The last thing to run is a Restful servlet and interacts with the system (Comes 
 
 Now you can point to:
 
-* [Chirp UI: http://localhost:8080] (http://localhost:8080)
-* [Chirp API: http://localhost:8080/search?q=] (http://localhost:8080/search?q=)
+* [Chirp UI - http://localhost:8080](http://localhost:8080)
+* [Chirp API - http://localhost:8080/search?q=](http://localhost:8080/search?q=)
