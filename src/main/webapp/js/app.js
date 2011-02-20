@@ -57,6 +57,7 @@ $(function(){
     addAll: function() {
       this.$("#tweets").html("");
       Tweets.each(this.addTweet);
+      $(".ts").easydate({ live: false }); // Live update timestamps
     },
 
     addTweet: function(tweet) {
@@ -87,6 +88,8 @@ var Chirper = {
     var div = $("#chirper-search-app .header").css("background-position-x");
     var x_position = div.substring(0, div.length - 2);
     $("#chirper-search-app .header").css("background-position-x", (parseInt(x_position, 10) + 50) + "px");
+    // Refresh dates
+    $(".ts").easydate({ live: false }); // Live update timestamps
   }
   // ,
   // 

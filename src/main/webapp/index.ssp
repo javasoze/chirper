@@ -13,6 +13,7 @@
   <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/backbone.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/easydate.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>

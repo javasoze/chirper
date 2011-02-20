@@ -30,7 +30,7 @@ body {
   box-shadow: 0 1px 1px #ccc;
   -webkit-box-shadow: 0 1px 1px #ccc;
   -moz-box-shadow: 0 1px 1px #ccc;
-  height: 1000px;
+  height: 1400px;
   overflow: hidden;
   width: 484px;
 }
@@ -69,16 +69,23 @@ body {
   font-weight: bold;
 }
 #main .chirper-search-app .tweet .user img {
-  border-radius: 8px;
+  border-radius: 6px;
   float: left;
+  width: 48px;
+  height: 48px;
   margin-right: 9px;
-  border-top-left-radius: 8px 8px;
-  border-top-right-radius: 8px 8px;
-  border-bottom-right-radius: 8px 8px;
-  border-bottom-left-radius: 8px 8px;
+  border-top-left-radius: 6px 6px;
+  border-top-right-radius: 6px 6px;
+  border-bottom-right-radius: 6px 6px;
+  border-bottom-left-radius: 6px 6px;
+  -moz-border-radius: 6px;
 }
 #main .chirper-search-app .tweet {
   margin-bottom: 18px;
+}
+#main .chirper-search-app .tweet .ts {
+  color: #999;
+  font-size: 12px;
 }
 #main .chirper-search-tech {
   border-top-right-radius: 8px 8px;
@@ -88,9 +95,9 @@ body {
 }
 #main .chirper-search-tech h1 {
 }
-#main .chirper-search-tech ul {
-  margin: 0;
-  padding: 0;
+#main .chirper-search-app ul, #main .chirper-search-tech ul {
+  margin-left: 0;
+  padding-left: 0;
 }
 #main .chirper-search-tech ul li {
   list-style-type: none;
@@ -101,7 +108,7 @@ body {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 1px 1px #ccc;
-  height: 1000px;
+  height: 1400px;
   left: 486px;
   position: relative;
   -webkit-box-shadow: 0 1px 1px #ccc;
@@ -115,7 +122,7 @@ input#q {
   border-radius: 3px;
   font-size: 18px;
   padding: 6px 9px;
-  width: 288px;
+  width: 296px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff');
