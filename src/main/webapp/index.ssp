@@ -12,7 +12,8 @@
   <script src="/js/underscore.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/js/backbone.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/backbone.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/easydate.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
@@ -21,13 +22,17 @@
       <!-- Search app -->
       <div class="column width2 first chirper-search-app" id="chirper-search-app">
         <div class="header">
-          <h1>Chirper</h1>
+          <p class="about">
+            The social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects.
+          </p>
         </div>
         <div class="content">
-          <form action="/">
+          <form action="/" id="search-form">
             <input type="text" name="q" autocomplete="off" id="q" placeholder="Search on Chirper" />
             <button class="search-button">Search</button>
           </form>
+          <ul id="tweets">
+          </ul>
         </div>
       </div>
       <!-- End Search app -->
@@ -37,12 +42,32 @@
           <h1>The Tools</h1>
         </div>
         <div class="content">
-          <div class="tech">
-            <h2>Voldemort</h2>
-            <p>
-              The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
-            </p>
-          </div>
+          <ul>
+            <li>
+              <h2>Zoie</h2>
+              <p>
+                The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+              </p>
+            </li>
+            <li>
+              <h2>Voldemort</h2>
+              <p>
+                The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+              </p>
+            </li>
+            <li>
+              <h2>Kafka</h2>
+              <p>
+                The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+              </p>
+            </li>
+            <li>
+              <h2>And More..</h2>
+              <p>
+                ....
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
       <!-- End Search Tech -->
@@ -50,5 +75,20 @@
       
     </div>
   </div>
+
+<!-- Mustache JS templates -->
+<script type="text/html" charset="utf-8" id="tweet-view">
+  <div class="tweet">
+  {{#status}}
+    {{#user}}
+      <div class="user"><img src="{{profile_image_url}}"/> {{screen_name}}</div>
+    {{/user}}
+    <div class="body">{{text}}</div>
+    <div class="ts">{{created_at}}</div>
+  {{/status}}
+  </div>
+</script>
+<!-- End Mustache JS templates -->
+
 </body>
 </html>
