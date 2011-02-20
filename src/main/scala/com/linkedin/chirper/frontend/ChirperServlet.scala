@@ -58,6 +58,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   }
 
   get("/search"){
+	val start = System.currentTimeMillis()
 	// params
 	val q = params.getOrElse("q", "")
 	val offset = params.getOrElse("offset", "0").toInt
@@ -90,6 +91,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	val resultJSON = DefaultSenseiJSONServlet.buildJSONResult(req,results)
 	val hitsArray = resultJSON.getJSONArray("hits")
 	val hitsArrayLen = hitsArray.length()
+	val fetchStart = System.currentTimeMillis()
 	var i = 0
 	while (i < hitsArrayLen){
 	  val hit = hitsArray.getJSONObject(i)
@@ -110,6 +112,10 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	  }
 	  i+=1
 	}
+	val fetchEnd = System.currentTimeMillis()
+	val end = System.currentTimeMillis()
+	resultJSON.put("fetchtime",(fetchEnd-fetchStart))
+	resultJSON.put("totaltime",(end-start))
 	resultJSON.toString()
   }
 }
