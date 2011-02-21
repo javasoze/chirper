@@ -44,25 +44,25 @@
         <div class="content">
           <ul>
              <li>
-              <h2><a href="http://sna-projects/sna">SNA</a></h2>
+              <h2><a href="http://sna-projects.com/sna">SNA</a></h2>
               <p>
                 The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
               </p>
             </li>
             <li>
-              <h2><a href="http://sna-projects/sensei">Sensei</a></h2>
+              <h2><a href="http://sna-projects.com/sensei">Sensei</a></h2>
               <p>
                 Distributed realtime faceted search system
               </p>
             </li>
             <li>
-              <h2><a href="http://sna-projects/voldemort">Voldemort</a></h2>
+              <h2><a href="http://sna-projects.com/voldemort">Voldemort</a></h2>
               <p>
                 Distributed key-value store
               </p>
             </li>
             <li>
-              <h2><a href="http://sna-projects/kafka">Kafka</a></h2>
+              <h2><a href="http://sna-projects.com/kafka">Kafka</a></h2>
               <p>
                 Distributed publish-subscribe messaging system
               </p>
