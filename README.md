@@ -47,7 +47,7 @@ The last thing to run is a Restful servlet and interacts with the system (Comes 
     chirper$ sbt
     [info] Building project Chirper 1.0 against Scala 2.8.0
     [info]    using ChirperStreamerProject with sbt 0.7.4 and Scala 2.7.7
-    > jetty-restart
+    > jetty-run
 
 Now you can point to:
 
