@@ -25,7 +25,7 @@ class ChirpJSONInterpreter extends JSONDataInterpreter{
 	  val dateFormated = new DecimalFormat("0000000000000000000000000000000000000000").format(date.getTime())
       val dateField = new Field("time",dateFormated,Store.NO,Index.NOT_ANALYZED_NO_NORMS)
       dateField.setOmitTermFreqAndPositions(true)
-	  doc.add(new Field("contents",obj.getString("text"),Store.NO,Index.ANALYZED))
+	  doc.add(new Field("contents",obj.optString("text"),Store.NO,Index.ANALYZED))
       doc.add(dateField)
 	  doc
 	} 

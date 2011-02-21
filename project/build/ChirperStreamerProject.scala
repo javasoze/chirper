@@ -13,7 +13,6 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val commonsIo = "commons-io" % "commons-io" % "2.0.1" % "runtime"
   val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1" % "runtime"
 
-
   val commonsConfiguration = "commons-configuration" % "commons-configuration" % "1.6" % "compile"
 
   val commonsLang = "commons-lang" % "commons-lang" % "2.5" % "runtime"
@@ -22,6 +21,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
 
   val fastutil = "fastutil" % "fastutil" % "5.0.5"
   val lucene = "org.apache.lucene" % "lucene-core" % "2.9.1"
+  val luceneHighlighter = "org.apache.lucene" % "lucene-highlighter" % "2.9.1"
   val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3" % "runtime"
   val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
 

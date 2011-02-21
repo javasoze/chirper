@@ -1,7 +1,7 @@
 package com.linkedin.chirper.servlet
 
 import com.linkedin.led.twitter.config._
-import com.linkedin.chirper.search.ChirpSearchNode
+import com.linkedin.chirper.search._
 import javax.servlet._
 import org.scalatra._
 import org.scalatra._
@@ -19,6 +19,7 @@ import voldemort.client.SocketStoreClientFactory
 import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
 import org.json._
+import org.apache.lucene.search.highlight._
 
 class ChirperServlet extends ScalatraServlet with ScalateSupport {
   var t1: Long = 0
@@ -35,6 +36,8 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   val tweetStore: StoreClient[String, String] = factory.getStoreClient[String, String](voldemortStore)
 
   val defaultPageSize = Config.readString("search.perPage")
+
+  val doHighlighting = Config.readBoolean("search.highlight.dohighlight")
 
   val senseiSvc = new ClusteredSenseiServiceImpl(zkurl,timeout,clusterName)
   senseiSvc.start()
@@ -73,11 +76,16 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	req.setCount(count)
 	req.setFetchStoredFields(false)
 	
+	var highlightScorer : Option[QueryScorer] = None
 	// Parse a query
 	if (q != null && q.length() > 0) {
 	      try {
 	        val sq = new StringQuery(q)
 	        req.setQuery(sq)
+	        if (doHighlighting && q.length()>2){
+	          val luceneQ = ChirpSearchConfig.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
+	          highlightScorer = Some(new QueryScorer(luceneQ))
+            }
 	      } catch {
 	        case e: Exception => e.printStackTrace()
 	      }
@@ -108,6 +116,16 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 		  val voldObj = new JSONObject(statusString)
 		  val tweetString = voldObj.getString("value")
 		  statusJsonObj = new JSONObject(tweetString)
+		  highlightScorer match {
+		     case Some(x) => {
+			   var text = statusJsonObj.optString("text")
+			   val highlighter = new Highlighter(ChirpSearchConfig.formatter,ChirpSearchConfig.encoder,x)
+			   val segments = highlighter.getBestFragments(ChirpSearchConfig.zoieConfig.getAnalyzer(),"contents",text,1)
+			   if (segments.length > 0) text = segments(0)
+			   statusJsonObj.put("text",text)
+		     }
+		     case _	=>
+		  }
 		}
 		catch{
 		  case e : Exception => e.printStackTrace()
