@@ -67,7 +67,7 @@
                 Distributed publish-subscribe messaging system
               </p>
             </li>
-            li>
+            <li>
               <h2><a href="https://github.com/acrosa/Scala-TwitterStreamer">TweetStreamer</a></h2>
               <p>
                 Tweet streamer via Twitter API
