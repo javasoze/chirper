@@ -43,22 +43,34 @@
         </div>
         <div class="content">
           <ul>
-            <li>
-              <h2>Zoie</h2>
+             <li>
+              <h2><a href="http://sna-projects/sna">SNA</a></h2>
               <p>
                 The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
               </p>
             </li>
             <li>
-              <h2>Voldemort</h2>
+              <h2><a href="http://sna-projects/sensei">Sensei</a></h2>
               <p>
-                The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+                Distributed realtime faceted search system
               </p>
             </li>
             <li>
-              <h2>Kafka</h2>
+              <h2><a href="http://sna-projects/voldemort">Voldemort</a></h2>
               <p>
-                The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+                Distributed key-value store
+              </p>
+            </li>
+            <li>
+              <h2><a href="http://sna-projects/kafka">Kafka</a></h2>
+              <p>
+                Distributed publish-subscribe messaging system
+              </p>
+            </li>
+            li>
+              <h2><a href="https://github.com/acrosa/Scala-TwitterStreamer">TweetStreamer</a></h2>
+              <p>
+                Tweet streamer via Twitter API
               </p>
             </li>
             <li>
