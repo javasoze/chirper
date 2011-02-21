@@ -8,6 +8,7 @@ import proj.zoie.impl.indexing.ZoieConfig;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryParser.QueryParser.Operator;
 import org.apache.lucene.util.Version;
 
 import com.sensei.search.nodes.SenseiQueryBuilderFactory
@@ -22,6 +23,7 @@ object ChirpSearchConfig{
 	 
 	// define query parser builder
 	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
+	queryParser.setDefaultOperator(Operator.AND)
 	val queryBuilderFactory = new SimpleQueryBuilderFactory(queryParser)
 	
 	// how do we convert an indexing event, in this case a json obj, into a lucene document
