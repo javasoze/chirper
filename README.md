@@ -15,7 +15,7 @@ Although the amount of code is minimal, the system can scale horizontally infini
 From the top level directory, e.g. ~/chirper
 
 1. sbt update (do this once to setup the probject)
-2. sbt compile (build the system)
+2. Make sure your twitter username/password is set in the [config file](https://github.com/javasoze/chirper/blob/master/config/TwitterStreamer.conf)
 3. sbt run
 
 You will see a list of classes that ca be run:
