@@ -95,7 +95,7 @@
     {{#user}}
       <div class="user"><img src="{{profile_image_url}}"/> {{screen_name}}</div>
     {{/user}}
-    <div class="body">{{text}}</div>
+    <div class="body">{{{text}}}</div>
     <div class="ts">{{created_at}}</div>
   {{/status}}
   </div>

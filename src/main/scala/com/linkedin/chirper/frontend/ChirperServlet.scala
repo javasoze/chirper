@@ -20,6 +20,7 @@ import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
 import org.json._
 import org.apache.lucene.search.highlight._
+import org.apache.commons.lang.StringEscapeUtils
 
 class ChirperServlet extends ScalatraServlet with ScalateSupport {
   var t1: Long = 0
@@ -119,6 +120,9 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 		  highlightScorer match {
 		     case Some(x) => {
 			   var text = statusJsonObj.optString("text")
+			   if (text.length()>0){
+			     text = StringEscapeUtils.escapeHtml(text)
+			   }
 			   val highlighter = new Highlighter(ChirpSearchConfig.formatter,ChirpSearchConfig.encoder,x)
 			   val segments = highlighter.getBestFragments(ChirpSearchConfig.zoieConfig.getAnalyzer(),"contents",text,1)
 			   if (segments.length > 0) text = segments(0)
