@@ -34,7 +34,7 @@ a {
   box-shadow: 0 1px 1px #ccc;
   -webkit-box-shadow: 0 1px 1px #ccc;
   -moz-box-shadow: 0 1px 1px #ccc;
-  height: 1400px;
+  height: 1200px;
   overflow: hidden;
   width: 484px;
 }
@@ -118,7 +118,7 @@ a {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 1px 1px #ccc;
-  height: 1400px;
+  height: 1200px;
   left: 486px;
   position: relative;
   -webkit-box-shadow: 0 1px 1px #ccc;
