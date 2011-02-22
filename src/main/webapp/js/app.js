@@ -56,16 +56,25 @@ $(function(){
       this.isLoading = false;
 
       // Clouds movement
-      this.cloudsInterval = setInterval(this.moveClouds, 10000);
-      this.moveClouds();
+      this.cloudsInterval = setInterval(this.refreshUIElements, 10000);
+      this.totalInterval = setInterval(this.refreshTotalCount, 4000);
+      this.refreshUIElements();
     },
 
-    moveClouds: function() {
+    refreshUIElements: function() {
+      // Refresh clouds
       var div = $("#chirper-search-app .header").css("background-position-x");
       var x_position = div.substring(0, div.length - 2);
       $("#chirper-search-app .header").css("background-position-x", (parseInt(x_position, 10) + 50) + "px");
       // Refresh dates
       $(".ts").easydate({ live: false }); // Live update timestamps
+    },
+
+    refreshTotalCount: function() {
+      // Refresh total hit count
+      $.get('/search', function(data) {
+        $('#total-tweets').html("Indexed "+ data.totaldocs + " tweets");
+      });
     },
 
     render: function() {

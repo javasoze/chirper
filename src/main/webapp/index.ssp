@@ -47,6 +47,7 @@ We're hiring:
             <input type="text" name="q" autocomplete="off" id="q" placeholder="Search on Chirper" />
             <button class="search-button">Search</button>
           </form>
+          <div id="total-tweets"></div>
           <ul id="tweets">
           </ul>
         </div>

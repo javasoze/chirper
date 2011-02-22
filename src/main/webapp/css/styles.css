@@ -63,6 +63,11 @@ a {
 #main .chirper-search-app .content, #main .chirper-search-tech .content {
   padding: 0 27px;
 }
+#main .chirper-search-app .content #total-tweets {
+  padding: 9px 0 0 0;
+  clear: both;
+  color: #666;
+}
 #main .chirper-search-app .content form {
   padding-top: 18px;
   text-align: center;
