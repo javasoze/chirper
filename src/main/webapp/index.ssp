@@ -39,7 +39,7 @@ We're hiring:
       <div class="column width2 first chirper-search-app" id="chirper-search-app">
         <div class="header">
           <p class="about">
-            The social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects.
+            Type your query in the search box below to search in real-time the indexed stream of tweets.
           </p>
         </div>
         <div class="content">
