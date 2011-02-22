@@ -7,6 +7,10 @@ body {
   padding: 18px 0;
   text-align: center;
 }
+a {
+  color: black;
+  text-decoration: none;
+}
 #main {
   margin: 1em auto;
   padding-bottom: 54px;
@@ -30,7 +34,7 @@ body {
   box-shadow: 0 1px 1px #ccc;
   -webkit-box-shadow: 0 1px 1px #ccc;
   -moz-box-shadow: 0 1px 1px #ccc;
-  height: 1400px;
+  height: 1200px;
   overflow: hidden;
   width: 484px;
 }
@@ -103,12 +107,18 @@ body {
   list-style-type: none;
   margin-bottom: 36px;
 }
+#main .chirper-search-tech ul li p a {
+  display: inline-block;
+  font-size: 14px;
+  color: #666;
+  text-decoration: none;
+}
 #main .main-divider {
   background-color: #EEE;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 1px 1px #ccc;
-  height: 1400px;
+  height: 1200px;
   left: 486px;
   position: relative;
   -webkit-box-shadow: 0 1px 1px #ccc;

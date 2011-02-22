@@ -6,8 +6,6 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="/css/baseline.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <link rel="stylesheet" href="/css/styles.css" type="text/css" media="screen" title="no title" charset="utf-8">
-  <link  href="http://fonts.googleapis.com/css?family=Coming+Soon:regular" rel="stylesheet" type="text/css" >
-  <link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css" >
   <link href='http://fonts.googleapis.com/css?family=Puritan' rel='stylesheet' type='text/css'>
   <script src="/js/underscore.js" type="text/javascript" charset="utf-8"></script>
   <script src="/js/mustache.js" type="text/javascript" charset="utf-8"></script>
@@ -17,13 +15,31 @@
   <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+
+<!--
+
+ __       __  .__   __.  __  ___  _______  _______   __  .__   __. 
+|  |     |  | |  \ |  | |  |/  / |   ____||       \ |  | |  \ |  | 
+|  |     |  | |   \|  | |  '  /  |  |__   |  .--.  ||  | |   \|  | 
+|  |     |  | |  . `  | |    <   |   __|  |  |  |  ||  | |  . `  | 
+|  `----.|  | |  |\   | |  .  \  |  |____ |  '--'  ||  | |  |\   | 
+|_______||__| |__| \__| |__|\__\ |_______||_______/ |__| |__| \__| 
+
+You like reading source code?, like to hack and build cool stuff?
+
+We're hiring:
+
+  http://www.linkedin.com/static?key=jobs_open
+
+-->
+
   <div id="main" class="main">
     <div class="width4">
       <!-- Search app -->
       <div class="column width2 first chirper-search-app" id="chirper-search-app">
         <div class="header">
           <p class="about">
-            The social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects.
+            Type your query in the search box below to search in real-time the indexed stream of tweets.
           </p>
         </div>
         <div class="content">
@@ -44,47 +60,59 @@
         <div class="content">
           <ul>
              <li>
-              <h2><a href="http://sna-projects.com/sna">SNA</a></h2>
+              <h2>SNA</h2>
               <p>
                 The Search, Network, and Analytics team at LinkedIn works on LinkedIn's information retrieval systems, the social graph system, data driven features, and supporting data infrastructure. This site hosts the open source projects that have been built by members of our team (and our friends).
+                <a href="http://sna-projects.com/sna">Learn More..</a>
               </p>
             </li>
             <li>
-              <h2><a href="http://sna-projects.com/sensei">Sensei</a></h2>
+              <h2>Sensei</h2>
               <p>
-                Distributed realtime faceted search system
+                A distributed searchable database that handles complex semi-structured queries. It can be used to power consumer search systems with rich structured data.
+                <a href="http://sna-projects.com/sensei">Learn More..</a>
               </p>
             </li>
             <li>
-              <h2><a href="http://sna-projects.com/voldemort">Voldemort</a></h2>
+              <h2>Voldemort</h2>
               <p>
-                Distributed key-value store
+                Is a Distributed key-value store used at LinkedIn for certain high-scalability storage problems where simple functional partitioning is not sufficient.
+                <a href="http://sna-projects.com/voldemort">Learn More..</a>
               </p>
             </li>
             <li>
-              <h2><a href="http://sna-projects.com/kafka">Kafka</a></h2>
+              <h2>Kafka</h2>
               <p>
-                Distributed publish-subscribe messaging system
+                Provides a publish-subscribe solution that can handle all activity stream data and processing on a consumer-scale web site.
+                <a href="http://sna-projects.com/kafka">Learn More..</a>
               </p>
             </li>
             <li>
-              <h2><a href="https://github.com/acrosa/Scala-TwitterStreamer">TweetStreamer</a></h2>
+              <h2>TweetStreamer</h2>
               <p>
-                Tweet streamer via Twitter API
+                A simple library for the Twitter streaming API, implements the reconnect strategy, and error policies specified on Twitter's documentation.
+                <a href="https://github.com/acrosa/Scala-TwitterStreamer">Learn More..</a>
               </p>
             </li>
             <li>
               <h2>And More..</h2>
-              <p>
-                ....
-              </p>
+              <a href="https://github.com/scalatra/scalatra">Scalatra</a>, 
+              <a href="http://hadoop.apache.org/zookeeper/">Zookeeper</a>, 
+              <a href="https://github.com/afeinberg/scalmert">Scalmert</a>, 
+              <a href="http://sna-projects.com/norbert/">Norbert</a>, 
+              <a href="http://jetty.codehaus.org/jetty/">Jetty</a>, 
+              <a href="http://documentcloud.github.com/underscore/">Undercore.js</a>, 
+              <a href="http://documentcloud.github.com/backbone/">Backbone.js</a>, 
+              <a href="http://mustache.github.com/">Mustache.js</a>, 
+              <a href="http://jquery.com/">JQuery</a>, 
+              <a href="http://www.google.com/webfonts">Google Font Directory</a>, 
+              and many more.
             </li>
           </ul>
         </div>
       </div>
       <!-- End Search Tech -->
       <div class="main-divider"></div>
-      
     </div>
   </div>
 
