@@ -12,7 +12,7 @@ $(function(){
       this.query = resp.parsedquery;
       this.models = resp.hits;
       return resp.hits;
-    },
+    }
   });
 
   window.Tweets = new TweetList();
@@ -35,6 +35,7 @@ $(function(){
 
   window.AppView = Backbone.View.extend({
     el: $("#chirper-search-app"),
+    cloudsInterval: undefined,
 
     events: {
       "keyup #q":  "search",
@@ -48,6 +49,23 @@ $(function(){
       Tweets.bind('all',     this.render);
 
       Tweets.fetch();
+
+      // Instant search properties
+      this.timeout = undefined;
+      this.delay = 300;
+      this.isLoading = false;
+
+      // Clouds movement
+      this.cloudsInterval = setInterval(this.moveClouds, 10000);
+      this.moveClouds();
+    },
+
+    moveClouds: function() {
+      var div = $("#chirper-search-app .header").css("background-position-x");
+      var x_position = div.substring(0, div.length - 2);
+      $("#chirper-search-app .header").css("background-position-x", (parseInt(x_position, 10) + 50) + "px");
+      // Refresh dates
+      $(".ts").easydate({ live: false }); // Live update timestamps
     },
 
     render: function() {
@@ -66,46 +84,25 @@ $(function(){
     },
 
     search: function() {
-      Tweets.url = "/search?q="+ this.$("#q").val();
-      Tweets.fetch();
+      var that = this;
+      if(!that.isLoading) {
+        that.timeout = setTimeout(function() {
+          that.isLoading = true;
+          Tweets.url = "/search?q="+ this.$("#q").val();
+          Tweets.fetch({
+            success: function() {
+              that.isLoading = false;
+            }
+          });
+        }, that.delay);
+      } else {
+        // "Already there's a search in progress..just wait
+      }
     }
   });
 
-  window.App = new AppView;
+  $(document).ready(function() {
+    window.App = new AppView;
+  });
 });
 
-var Chirper = {
-
-  cloudsInterval: undefined,
-
-  init: function() {
-    // this.addSearchListeners();
-    this.cloudsInterval = setInterval(this.moveClouds, 10000);
-    this.moveClouds();
-  },
-
-  moveClouds: function() {
-    var div = $("#chirper-search-app .header").css("background-position-x");
-    var x_position = div.substring(0, div.length - 2);
-    $("#chirper-search-app .header").css("background-position-x", (parseInt(x_position, 10) + 50) + "px");
-    // Refresh dates
-    $(".ts").easydate({ live: false }); // Live update timestamps
-  }
-  // ,
-  // 
-  // addSearchListeners: function() {
-  //   var that = this;
-  //   $("#search-form").submit(function() {
-  //     that.search($("#q").val());
-  //     return false;
-  //   });
-  // },
-  // 
-  // search: function(query) {
-  //   $.ajax
-  // }
-};
-
-$(document).ready(function() {
-  Chirper.init();
-});

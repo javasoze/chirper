@@ -103,6 +103,12 @@ body {
   list-style-type: none;
   margin-bottom: 36px;
 }
+#main .chirper-search-tech ul li p a {
+  font-size: 14px;
+  color: #666;
+  display: block;
+  text-decoration: none;
+}
 #main .main-divider {
   background-color: #EEE;
   border-top: 1px solid #ddd;
