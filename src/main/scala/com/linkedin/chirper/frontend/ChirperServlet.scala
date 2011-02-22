@@ -66,7 +66,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   get("/search"){
 	val start = System.currentTimeMillis()
 	// params
-	val q = params.getOrElse("q", "")
+	var q = params.getOrElse("q", "")
 	val offset = params.getOrElse("offset", "0").toInt
 	val count = params.getOrElse("count", defaultPageSize).toInt
 	
@@ -79,7 +79,9 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	
 	var highlightScorer : Option[QueryScorer] = None
 	// Parse a query
-	if (q != null && q.length() > 0) {
+	if (q != null) {
+	  q = q.trim()
+	  if (q.length>1){
 	      try {
 	        val sq = new StringQuery(q)
 	        req.setQuery(sq)
@@ -90,6 +92,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	      } catch {
 	        case e: Exception => e.printStackTrace()
 	      }
+	  }
 	}
 	
 	// sort by time
