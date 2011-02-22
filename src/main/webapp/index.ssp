@@ -96,19 +96,17 @@ We're hiring:
             </li>
             <li>
               <h2>And More..</h2>
-              <p>
-                <a href="https://github.com/scalatra/scalatra"></a>Scalatra, 
-                <a href="http://hadoop.apache.org/zookeeper/"></a>Zookeeper, 
-                <a href="https://github.com/afeinberg/scalmert"></a>Scalmert, 
-                <a href="http://sna-projects.com/norbert/"></a>Norbert, 
-                <a href="http://jetty.codehaus.org/jetty/"></a>Jetty, 
-                <a href="http://documentcloud.github.com/underscore/"></a>Undercore.js, 
-                <a href="http://documentcloud.github.com/backbone/"></a>Backbone.js, 
-                <a href="http://mustache.github.com/"></a>Mustache.js, 
-                <a href="http://jquery.com/"></a>JQuery, 
-                <a href="http://www.google.com/webfonts"></a>Google Font Directory, 
-                and many more.
-              </p>
+              <a href="https://github.com/scalatra/scalatra">Scalatra</a>, 
+              <a href="http://hadoop.apache.org/zookeeper/">Zookeeper</a>, 
+              <a href="https://github.com/afeinberg/scalmert">Scalmert</a>, 
+              <a href="http://sna-projects.com/norbert/">Norbert</a>, 
+              <a href="http://jetty.codehaus.org/jetty/">Jetty</a>, 
+              <a href="http://documentcloud.github.com/underscore/">Undercore.js</a>, 
+              <a href="http://documentcloud.github.com/backbone/">Backbone.js</a>, 
+              <a href="http://mustache.github.com/">Mustache.js</a>, 
+              <a href="http://jquery.com/">JQuery</a>, 
+              <a href="http://www.google.com/webfonts">Google Font Directory</a>, 
+              and many more.
             </li>
           </ul>
         </div>

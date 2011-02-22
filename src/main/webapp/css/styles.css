@@ -7,6 +7,10 @@ body {
   padding: 18px 0;
   text-align: center;
 }
+a {
+  color: black;
+  text-decoration: none;
+}
 #main {
   margin: 1em auto;
   padding-bottom: 54px;
@@ -104,9 +108,9 @@ body {
   margin-bottom: 36px;
 }
 #main .chirper-search-tech ul li p a {
+  display: inline-block;
   font-size: 14px;
   color: #666;
-  display: block;
   text-decoration: none;
 }
 #main .main-divider {
