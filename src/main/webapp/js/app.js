@@ -9,6 +9,8 @@ $(function(){
 
     parse: function(resp) {
       this.total = resp.totaldocs;
+      this.numhits = resp.numhits;
+      this.totaltime = resp.totaltime;
       this.query = resp.parsedquery;
       this.models = resp.hits;
       return resp.hits;
@@ -72,7 +74,7 @@ $(function(){
 
     refreshTotalCount: function() {
       // Refresh total hit count
-      $.get('/search', function(data) {
+      $.get('/search?offset=0&count=0', function(data) {
         $('#total-tweets').html("Indexed "+ data.totaldocs + " tweets");
       });
     },
@@ -101,6 +103,7 @@ $(function(){
           Tweets.fetch({
             success: function() {
               that.isLoading = false;
+              $('#found-tweets').html("Found "+ Tweets.numhits +" tweets in ("+ Tweets.totaltime +" ms )")
             }
           });
         }, that.delay);
