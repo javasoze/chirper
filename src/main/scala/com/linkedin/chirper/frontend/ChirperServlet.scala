@@ -68,7 +68,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   }
 
   get("/search"){
-	log.info(params.toString())
+	log.info(request.getQueryString)
 	val start = System.currentTimeMillis()
 	// params
 	var q = params.getOrElse("q", "")
