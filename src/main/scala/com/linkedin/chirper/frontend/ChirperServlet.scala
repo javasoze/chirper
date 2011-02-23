@@ -22,9 +22,13 @@ import org.json._
 import org.apache.lucene.search.highlight._
 import org.apache.commons.lang.StringEscapeUtils
 
+import net.lag.logging.Logger
+
 class ChirperServlet extends ScalatraServlet with ScalateSupport {
   var t1: Long = 0
   var t2: Long = 0
+
+  val log = Logger.get
 
   val clusterName = Config.readString("zookeeper.cluster")
   val zkurl = Config.readString("zookeeper.url")
@@ -64,6 +68,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   }
 
   get("/search"){
+	log.info(params.toString())
 	val start = System.currentTimeMillis()
 	// params
 	var q = params.getOrElse("q", "")
