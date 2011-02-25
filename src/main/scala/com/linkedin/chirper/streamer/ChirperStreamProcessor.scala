@@ -31,7 +31,12 @@ class ChirperStreamProcessor extends StreamProcessor{
 	
 	val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(voldemortUrl));
 	val tweetStore: StoreClient[String, String] = factory.getStoreClient[String, String](voldemortStore)
-	val kafkaProducer = new SimpleProducer(kafkaHost,kafkaPort, 64 * 1024, 100000, 10000)	
+	val kafkaProducer = new SimpleProducer(kafkaHost,kafkaPort, 64 * 1024, 100000, 10000)
+	
+	def shutdown() = {
+		kafkaProducer.close()
+		factory.close()
+	}	
 	
 	override def process(is: InputStream): Unit = {
 	  val reader: BufferedReader = new BufferedReader(new InputStreamReader(is,DefaultConfigs.UTF8Charset))

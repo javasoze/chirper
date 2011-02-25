@@ -6,6 +6,7 @@ import org.apache.log4j.spi.LoggingEvent
 import org.json.JSONObject
 
 import com.linkedin.chirper.DefaultConfigs
+import com.sensei.dataprovider.kafka.KafkaStreamIndexLoaderFactory.DefaultJsonFactory
 
 class ChopchopLogMessageEncoder extends Encoder[LoggingEvent]{
 	override def toMessage(event: LoggingEvent):Message = {

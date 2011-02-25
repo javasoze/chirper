@@ -1,6 +1,7 @@
 package com.linkedin.chopchop.search
 
 import org.json.JSONObject
+import com.sensei.indexing.api.DefaultSenseiInterpreter
 import com.sensei.dataprovider.kafka.KafkaJsonStreamDataProvider
 import com.sensei.indexing.api.JSONValueInterpreter
 

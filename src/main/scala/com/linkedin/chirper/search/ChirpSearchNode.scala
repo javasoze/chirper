@@ -2,21 +2,23 @@ package com.linkedin.chirper.search
 
 import com.linkedin.led.twitter.config._
 
-import org.json.JSONObject;
+import com.linkedin.chirper.DefaultConfigs
 
-import proj.zoie.api.DefaultZoieVersion;
-import proj.zoie.api.DefaultZoieVersion.DefaultZoieVersionFactory;
-import proj.zoie.hourglass.impl.HourGlassScheduler;
-import proj.zoie.hourglass.impl.HourGlassScheduler.FREQUENCY;
-import proj.zoie.impl.indexing.ZoieConfig;
+import org.json.JSONObject
+
+import proj.zoie.api.DefaultZoieVersion
+import proj.zoie.api.DefaultZoieVersion.DefaultZoieVersionFactory
+import proj.zoie.hourglass.impl.HourGlassScheduler
+import proj.zoie.hourglass.impl.HourGlassScheduler.FREQUENCY
+import proj.zoie.impl.indexing.ZoieConfig
 
 import java.util._
 import java.text.SimpleDateFormat
 
-import com.linkedin.norbert.javacompat.cluster.ClusterClient;
-import com.linkedin.norbert.javacompat.cluster.ZooKeeperClusterClient;
-import com.linkedin.norbert.javacompat.network.NettyNetworkServer;
-import com.linkedin.norbert.javacompat.network.NetworkServer;
+import com.linkedin.norbert.javacompat.cluster.ClusterClient
+import com.linkedin.norbert.javacompat.cluster.ZooKeeperClusterClient
+import com.linkedin.norbert.javacompat.network.NettyNetworkServer
+import com.linkedin.norbert.javacompat.network.NetworkServer
 import com.sensei.search.nodes.impl.SenseiBuilderHelper
 import com.sensei.search.nodes.SenseiHourglassFactory
 import com.sensei.search.nodes.SenseiIndexLoaderFactory
@@ -29,11 +31,6 @@ import java.io.File
 
 // Build a search node
 object ChirpSearchNode{
-	def addShutdownHook(body: => Unit) = 
-	  Runtime.getRuntime.addShutdownHook(new Thread {
-	    override def run { body }
-	})
-	
 	def main(args: Array[String]) = {
 	
 	  val nodeid = Config.readInt("search.node.id")
@@ -46,7 +43,7 @@ object ChirpSearchNode{
 	  // rolls daily at midnight, keep 7 days
 	  val hfFactory = new SenseiHourglassFactory[JSONObject, DefaultZoieVersion](idxDir,ChirpSearchConfig.interpreter,
                           new SenseiIndexReaderDecorator(ChirpSearchConfig.handlerList,null), 
-	                      ChirpSearchConfig.zoieConfig, "00 00 00", 7, FREQUENCY.DAILY)
+	                      DefaultConfigs.zoieConfig, "00 00 00", 7, FREQUENCY.DAILY)
 	
 	  val clusterName = Config.readString("zookeeper.cluster")
       val zkurl = Config.readString("zookeeper.url")
@@ -61,9 +58,9 @@ object ChirpSearchNode{
       // builds the server
 	  val server = new SenseiServer(nodeid, port, partList.split(",").map{i=>i.toInt},
 			                      idxDir,networkServer,
-			                      clusterClient,hfFactory,ChirpSearchConfig.tweetIndexLoaderFactory,ChirpSearchConfig.queryBuilderFactory)
+			                      clusterClient,hfFactory,ChirpSearchConfig.tweetIndexLoaderFactory,DefaultConfigs.queryBuilderFactory)
 			
-	  addShutdownHook{ server.shutdown }
+	  DefaultConfigs.addShutdownHook{ server.shutdown }
 	
 	  // starts the server
 	  server.start(true)

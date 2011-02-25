@@ -2,51 +2,29 @@ package com.linkedin.chirper.search
 
 import com.linkedin.led.twitter.config._
 
-import proj.zoie.api.DefaultZoieVersion;
-import proj.zoie.api.DefaultZoieVersion.DefaultZoieVersionFactory;
-import proj.zoie.impl.indexing.ZoieConfig;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.queryParser.QueryParser.Operator;
-import org.apache.lucene.util.Version;
-
-import com.sensei.search.nodes.SenseiQueryBuilderFactory
-import com.sensei.search.nodes.impl.SimpleQueryBuilderFactory
+import com.sensei.indexing.api.DefaultSenseiInterpreter
 import com.browseengine.bobo.facets.FacetHandler
 import com.browseengine.bobo.facets.data.PredefinedTermListFactory
 import com.browseengine.bobo.facets.impl.RangeFacetHandler
 
+import com.linkedin.chirper.DefaultConfigs
 import com.sensei.dataprovider.kafka.KafkaStreamIndexLoaderFactory.DefaultJsonFactory
 
 
 object ChirpSearchConfig{
-	// zoie configuration, use default
-	val zoieConfig = new ZoieConfig[DefaultZoieVersion](new DefaultZoieVersionFactory());
-	 
-	// define query parser builder
-	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
-	queryParser.setDefaultOperator(Operator.AND)
-	val queryBuilderFactory = new SimpleQueryBuilderFactory(queryParser)
-	
 	// kafka config
-	val kafkahost = Config.readString("kafka.host")
-	val port = Config.readInt("kafka.port")
 	val kafkatopic = Config.readString("kafka.topic")
-	val batch = Config.readInt("search.node.index.batch")
 	
-	val tweetIndexLoaderFactory = new DefaultJsonFactory(kafkahost,port,kafkatopic,batch,30000)
+	val tweetIndexLoaderFactory = new DefaultJsonFactory(DefaultConfigs.kafkahost,DefaultConfigs.port,kafkatopic,DefaultConfigs.batch,30000)
 	
 	// how do we convert an indexing event, in this case a json obj, into a lucene document
-	val interpreter = new ChirpJSONInterpreter();
+	val interpreter = new ChirpJSONInterpreter()
 	
 	// use a bobo range facet handler for fast sorting on time
 	val handlerList = new java.util.ArrayList[FacetHandler[_]]()
 	val rangeList = new java.util.ArrayList[java.lang.String]()
-	val timeHandler = new RangeFacetHandler("time",new PredefinedTermListFactory[java.lang.Long](classOf[java.lang.Long], "0000000000000000000000000000000000000000"),rangeList)
+	val timeHandler = new RangeFacetHandler("time",DefaultSenseiInterpreter.getTermListFactory(classOf[java.lang.Long]),rangeList)
 	handlerList.add(timeHandler)
 	
-	// highlighting
-	val formatter = new org.apache.lucene.search.highlight.SimpleHTMLFormatter(Config.readString("search.highlight.pretag"),Config.readString("search.highlight.posttag"))
-	val encoder = new org.apache.lucene.search.highlight.SimpleHTMLEncoder()
 }

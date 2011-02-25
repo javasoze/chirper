@@ -1,5 +1,6 @@
 package com.linkedin.chirper.streamer
 
+import com.linkedin.chirper.DefaultConfigs
 import com.linkedin.led.twitter.config._
 import com.linkedin.led.twitter.streaming.StreamingClient
 
@@ -12,6 +13,7 @@ object ChirpStream {
 
     val processor = new ChirperStreamProcessor()
 	
+	DefaultConfigs.addShutdownHook(processor.shutdown())
     val twitterClient = new StreamingClient(username, password, processor)
     twitterClient.sample
   }

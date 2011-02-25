@@ -1,5 +1,6 @@
 package com.linkedin.chopchop.search
 
+import com.linkedin.chirper.DefaultConfigs
 import com.sensei.indexing.api._
 
 class LogIndexEvent(uid:Long,timeStamp:Long){
@@ -21,6 +22,6 @@ class LogIndexEvent(uid:Long,timeStamp:Long){
   @Meta(name="logger")
   var logName = ""
 
-  @Text(name="message")
+  @Text(name="contents")
   var logMessage = ""
 }

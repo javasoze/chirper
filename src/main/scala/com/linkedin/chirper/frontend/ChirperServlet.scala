@@ -1,6 +1,7 @@
 package com.linkedin.chirper.servlet
 
 import com.linkedin.led.twitter.config._
+import com.linkedin.chirper.DefaultConfigs
 import com.linkedin.chirper.search._
 import javax.servlet._
 import org.scalatra._
@@ -47,7 +48,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   val senseiSvc = new ClusteredSenseiServiceImpl(zkurl,timeout,clusterName)
   senseiSvc.start()
 
-  ChirpSearchNode.addShutdownHook{ senseiSvc.shutdown }
+  DefaultConfigs.addShutdownHook{ senseiSvc.shutdown }
 
   before {
     t1 = System.currentTimeMillis()
@@ -91,7 +92,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	        val sq = new StringQuery(q)
 	        req.setQuery(sq)
 	        if (doHighlighting && q.length()>2){
-	          val luceneQ = ChirpSearchConfig.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
+	          val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
 	          highlightScorer = Some(new QueryScorer(luceneQ))
             }
 	      } catch {
@@ -131,8 +132,8 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 			   if (text.length()>0){
 			     text = StringEscapeUtils.escapeHtml(text)
 			   }
-			   val highlighter = new Highlighter(ChirpSearchConfig.formatter,ChirpSearchConfig.encoder,x)
-			   val segments = highlighter.getBestFragments(ChirpSearchConfig.zoieConfig.getAnalyzer(),"contents",text,1)
+			   val highlighter = new Highlighter(DefaultConfigs.formatter,DefaultConfigs.encoder,x)
+			   val segments = highlighter.getBestFragments(DefaultConfigs.zoieConfig.getAnalyzer(),"contents",text,1)
 			   if (segments.length > 0) text = segments(0)
 			   statusJsonObj.put("text",text)
 		     }
