@@ -24,6 +24,7 @@ import com.sensei.search.nodes.SenseiIndexReaderDecorator
 import com.sensei.search.nodes.SenseiServer
 import com.sensei.search.nodes.impl._
 
+
 import java.io.File
 
 // Build a search node
@@ -56,14 +57,11 @@ object ChirpSearchNode{
 
       // build a default netty-based network server
       val networkServer = SenseiBuilderHelper.buildDefaultNetworkServer(clusterClient);
-
-      // class to hook up to kafka for events
-	  val indexLoaderFactory = new ChirpIndexLoaderFactory();
 		
       // builds the server
 	  val server = new SenseiServer(nodeid, port, partList.split(",").map{i=>i.toInt},
 			                      idxDir,networkServer,
-			                      clusterClient,hfFactory,indexLoaderFactory,ChirpSearchConfig.queryBuilderFactory)
+			                      clusterClient,hfFactory,ChirpSearchConfig.tweetIndexLoaderFactory,ChirpSearchConfig.queryBuilderFactory)
 			
 	  addShutdownHook{ server.shutdown }
 	

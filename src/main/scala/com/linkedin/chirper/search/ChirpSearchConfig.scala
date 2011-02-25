@@ -17,6 +17,9 @@ import com.browseengine.bobo.facets.FacetHandler
 import com.browseengine.bobo.facets.data.PredefinedTermListFactory
 import com.browseengine.bobo.facets.impl.RangeFacetHandler
 
+import com.sensei.dataprovider.kafka.KafkaStreamIndexLoaderFactory.DefaultJsonFactory
+
+
 object ChirpSearchConfig{
 	// zoie configuration, use default
 	val zoieConfig = new ZoieConfig[DefaultZoieVersion](new DefaultZoieVersionFactory());
@@ -25,6 +28,14 @@ object ChirpSearchConfig{
 	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
 	queryParser.setDefaultOperator(Operator.AND)
 	val queryBuilderFactory = new SimpleQueryBuilderFactory(queryParser)
+	
+	// kafka config
+	val kafkahost = Config.readString("kafka.host")
+	val port = Config.readInt("kafka.port")
+	val kafkatopic = Config.readString("kafka.topic")
+	val batch = Config.readInt("search.node.index.batch")
+	
+	val tweetIndexLoaderFactory = new DefaultJsonFactory(kafkahost,port,kafkatopic,batch,30000)
 	
 	// how do we convert an indexing event, in this case a json obj, into a lucene document
 	val interpreter = new ChirpJSONInterpreter();

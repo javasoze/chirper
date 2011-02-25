@@ -19,6 +19,7 @@ import voldemort.client.ClientConfig
 import voldemort.client.SocketStoreClientFactory
 import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
+import com.linkedin.chirper.DefaultConfigs
 
 // processes each tweet from the streamer
 class ChirperStreamProcessor extends StreamProcessor{
@@ -33,7 +34,7 @@ class ChirperStreamProcessor extends StreamProcessor{
 	val kafkaProducer = new SimpleProducer(kafkaHost,kafkaPort, 64 * 1024, 100000, 10000)	
 	
 	override def process(is: InputStream): Unit = {
-	  val reader: BufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"))
+	  val reader: BufferedReader = new BufferedReader(new InputStreamReader(is,DefaultConfigs.UTF8Charset))
 	  var line = reader.readLine()
 	  while (line != null) {
 		// for each tweet
@@ -43,7 +44,7 @@ class ChirperStreamProcessor extends StreamProcessor{
 		  val jsonObj = new JSONObject(line)
 		  val id = jsonObj.getString("id_str")
 		  // send to kafka
-	      kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes("UTF8"))))
+	      kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes(DefaultConfigs.UTF8Charset))))
 	      // send to voldemort store
 		  tweetStore(id) = line  
         }
