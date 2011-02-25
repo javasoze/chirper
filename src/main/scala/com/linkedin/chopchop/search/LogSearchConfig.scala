@@ -20,5 +20,5 @@ object LogSearchConfig{
 	val logHandlerList = new java.util.ArrayList[FacetHandler[_]]()
 	val logTimerangeList = new java.util.ArrayList[java.lang.String]()
 	val logTimeHandler = new RangeFacetHandler("time",DefaultSenseiInterpreter.getTermListFactory(classOf[java.lang.Long]),logTimerangeList)
-	//logHandlerList.add(logTimeHandler)
+	logHandlerList.add(logTimeHandler.asInstanceOf[FacetHandler[_]])
 }
