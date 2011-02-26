@@ -31,12 +31,12 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 
   val log = Logger.get
 
-  val clusterName = Config.readString("zookeeper.cluster")
+  val clusterName = Config.readString("tweet.zookeeper.cluster")
   val zkurl = Config.readString("zookeeper.url")
   val timeout = 30000
 
   val voldemortUrl = Config.readString("voldemort.url")
-  val voldemortStore = Config.readString("voldemort.store")
+  val voldemortStore = Config.readString("tweet.voldemort.store")
 
   val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(voldemortUrl));
   val tweetStore: StoreClient[String, String] = factory.getStoreClient[String, String](voldemortStore)

@@ -17,6 +17,7 @@ class LogMessageInterpreter extends JSONValueInterpreter[LogIndexEvent](classOf[
 		event.logLevel = jsonObj.optString("level")
 		event.logName = jsonObj.optString("logger")
 		event.logMessage = jsonObj.optString("message")
+		event.json = jsonObj.toString()
 		event
 	}
 }

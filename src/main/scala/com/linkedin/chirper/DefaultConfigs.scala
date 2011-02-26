@@ -20,11 +20,19 @@ object DefaultConfigs{
 	val UTF8Charset = Charset.forName("UTF-8")
 	
 	val kafkahost = Config.readString("kafka.host")
-	val port = Config.readInt("kafka.port")
+	val kafkaport = Config.readInt("kafka.port")
+	
 	val batch = Config.readInt("search.node.index.batch")
+	
+	// zookeeper settings
+	val zkurl = Config.readString("zookeeper.url")
+	val timeout = 30000
 	
 	// zoie configuration, use default
 	val zoieConfig = new ZoieConfig[DefaultZoieVersion](new DefaultZoieVersionFactory());
+	
+	// voldemort configuration
+	val voldemortUrl = Config.readString("voldemort.url")
 	
 	// query builder
 	// define query parser builder

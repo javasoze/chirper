@@ -24,4 +24,7 @@ class LogIndexEvent(uid:Long,timeStamp:Long){
 
   @Text(name="contents")
   var logMessage = ""
+
+  @Store(name="json")
+  var json = ""
 }

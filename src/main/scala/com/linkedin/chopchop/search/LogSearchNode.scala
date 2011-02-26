@@ -1,4 +1,4 @@
-package com.linkedin.chirper.search
+package com.linkedin.chopchop.search
 
 import com.linkedin.led.twitter.config._
 
@@ -14,6 +14,7 @@ import proj.zoie.hourglass.impl.HourGlassScheduler.FREQUENCY
 import proj.zoie.impl.indexing.ZoieConfig
 
 import java.util._
+import java.io.File
 import java.text.SimpleDateFormat
 
 import com.linkedin.norbert.javacompat.cluster.{ClusterClient,ZooKeeperClusterClient}
@@ -22,28 +23,27 @@ import com.sensei.search.nodes.{SenseiHourglassFactory,SenseiIndexLoaderFactory,
 import com.sensei.search.nodes.impl._
 
 
-import java.io.File
-
 // Build a search node
-object ChirpSearchNode{
+object LogSearchNode{
 	def main(args: Array[String]) = {
 	
-	  val nodeid = Config.readInt("tweet.search.node.id")
-	  val port = Config.readInt("tweet.search.node.port")
-	  val partList = Config.readString("tweet.search.node.partitions")
+	  val nodeid = Config.readInt("log.search.node.id")
+	  val port = Config.readInt("log.search.node.port")
+	  val partList = Config.readString("log.search.node.partitions")
 	
 	  // where to put the index
-	  val idxDir = new File(Config.readString("tweet.search.node.index.dir"))
+	  val idxDir = new File(Config.readString("log.search.node.index.dir"))
 	
 	  // rolls daily at midnight, keep 7 days
-	  val hfFactory = new SenseiHourglassFactory[JSONObject, DefaultZoieVersion](idxDir,ChirpSearchConfig.interpreter,
-                          new SenseiIndexReaderDecorator(ChirpSearchConfig.handlerList,null), 
+	  val hfFactory = new SenseiHourglassFactory[JSONObject, DefaultZoieVersion](idxDir,LogSearchConfig.logIndexInterpreter,
+                          new SenseiIndexReaderDecorator(LogSearchConfig.logHandlerList,null), 
 	                      DefaultConfigs.zoieConfig, "00 00 00", 7, FREQUENCY.DAILY)
 	
-	  val clusterName = Config.readString("tweet.zookeeper.cluster")
+	  val clusterName = Config.readString("log.zookeeper.cluster")
 
       // zookeeper cluster client
       val clusterClient = new ZooKeeperClusterClient(clusterName,DefaultConfigs.zkurl,DefaultConfigs.timeout);
+
 
       // build a default netty-based network server
       val networkServer = SenseiBuilderHelper.buildDefaultNetworkServer(clusterClient);
@@ -51,7 +51,7 @@ object ChirpSearchNode{
       // builds the server
 	  val server = new SenseiServer(nodeid, port, partList.split(",").map{i=>i.toInt},
 			                      idxDir,networkServer,
-			                      clusterClient,hfFactory,ChirpSearchConfig.tweetIndexLoaderFactory,DefaultConfigs.queryBuilderFactory)
+			                      clusterClient,hfFactory,LogSearchConfig.logIndexLoaderFactory,DefaultConfigs.queryBuilderFactory)
 			
 	  DefaultConfigs.addShutdownHook{ server.shutdown }
 	

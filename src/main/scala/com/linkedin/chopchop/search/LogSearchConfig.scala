@@ -12,7 +12,7 @@ import com.linkedin.chirper.DefaultConfigs
 
 object LogSearchConfig{
 	val kafkaLogtopic = Config.readString("kafka.log.topic")
-	val logIndexLoaderFactory = new DefaultJsonFactory(DefaultConfigs.kafkahost,DefaultConfigs.port,kafkaLogtopic,DefaultConfigs.batch,30000)
+	val logIndexLoaderFactory = new DefaultJsonFactory(DefaultConfigs.kafkahost,DefaultConfigs.kafkaport,kafkaLogtopic,DefaultConfigs.batch,30000)
 	
 	val logIndexInterpreter = new LogMessageInterpreter()
 	

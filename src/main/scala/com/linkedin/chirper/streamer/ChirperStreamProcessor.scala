@@ -15,23 +15,20 @@ import kafka.message._
 import kafka.producer._
 
 import voldemort.scalmert.client.StoreClient
-import voldemort.client.ClientConfig
-import voldemort.client.SocketStoreClientFactory
+import voldemort.client.{SocketStoreClientFactory,ClientConfig}
 import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
 import com.linkedin.chirper.DefaultConfigs
 
 // processes each tweet from the streamer
 class ChirperStreamProcessor extends StreamProcessor{
-	val kafkaHost = Config.readString("kafka.host")
-	val kafkaPort = Config.readInt("kafka.port")
-	val kafkaTopic = Config.readString("kafka.topic")
-	val voldemortUrl = Config.readString("voldemort.url")
-	val voldemortStore = Config.readString("voldemort.store")
+
+	val kafkaTopic = Config.readString("tweet.kafka.topic")
+	val voldemortStore = Config.readString("tweet.voldemort.store")
 	
-	val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(voldemortUrl));
+	val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(DefaultConfigs.voldemortUrl));
 	val tweetStore: StoreClient[String, String] = factory.getStoreClient[String, String](voldemortStore)
-	val kafkaProducer = new SimpleProducer(kafkaHost,kafkaPort, 64 * 1024, 100000, 10000)
+	val kafkaProducer = new SimpleProducer(DefaultConfigs.kafkahost,DefaultConfigs.kafkaport, 64 * 1024, 100000, 10000)
 	
 	def shutdown() = {
 		kafkaProducer.close()
@@ -48,10 +45,12 @@ class ChirperStreamProcessor extends StreamProcessor{
 		  println(line)
 		  val jsonObj = new JSONObject(line)
 		  val id = jsonObj.getString("id_str")
+		  // send to voldemort store
+		  tweetStore(id) = line
+		
 		  // send to kafka
 	      kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes(DefaultConfigs.UTF8Charset))))
-	      // send to voldemort store
-		  tweetStore(id) = line  
+	      
         }
         catch{
 	      case je: JSONException => 

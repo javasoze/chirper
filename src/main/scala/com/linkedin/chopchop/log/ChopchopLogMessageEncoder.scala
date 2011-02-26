@@ -9,7 +9,19 @@ import com.linkedin.chirper.DefaultConfigs
 import com.sensei.dataprovider.kafka.KafkaStreamIndexLoaderFactory.DefaultJsonFactory
 
 class ChopchopLogMessageEncoder extends Encoder[LoggingEvent]{
+	
 	override def toMessage(event: LoggingEvent):Message = {
+		val jsonString = toString(event)
+		new Message(jsonString.getBytes(DefaultConfigs.UTF8Charset))
+	}
+	
+	
+	def toString(event: LoggingEvent):String = {
+		val jsonObj = toJson(event)
+		jsonObj.toString()
+	}
+	
+	def toJson(event: LoggingEvent):JSONObject = {
 		val jsonObj = new JSONObject()
 		
 		jsonObj.put("class",event.getFQNOfLoggerClass())
@@ -21,7 +33,7 @@ class ChopchopLogMessageEncoder extends Encoder[LoggingEvent]{
 		
 		//TODO: add properties
 		//TODO: add throwable info
-		val jsonString = jsonObj.toString()
-		new Message(jsonString.getBytes(DefaultConfigs.UTF8Charset))
+		
+		jsonObj
 	}
 }
