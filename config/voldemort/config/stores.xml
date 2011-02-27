@@ -8,9 +8,12 @@
     <required-writes>1</required-writes>
     <key-serializer>
       <type>string</type>
+      <schema-info>UTF-8</schema-info>
     </key-serializer>
     <value-serializer>
       <type>string</type>
+      <schema-info>UTF-8</schema-info>
     </value-serializer>
+    <retention-days>10</retention-days>
   </store>
 </stores>
