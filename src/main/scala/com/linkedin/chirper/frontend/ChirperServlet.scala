@@ -31,24 +31,27 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 
   val log = Logger.get
 
-  val clusterName = Config.readString("tweet.zookeeper.cluster")
-  val zkurl = Config.readString("zookeeper.url")
+  val tweetClusterName = Config.readString("tweet.zookeeper.cluster")
+  val logClusterName = Config.readString("chopchop.zookeeper.cluster")
+
   val timeout = 30000
 
-  val voldemortUrl = Config.readString("voldemort.url")
   val voldemortStore = Config.readString("tweet.voldemort.store")
 
-  val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(voldemortUrl));
+  val factory = new SocketStoreClientFactory(new ClientConfig().setBootstrapUrls(DefaultConfigs.voldemortUrl));
   val tweetStore: StoreClient[String, String] = factory.getStoreClient[String, String](voldemortStore)
 
   val defaultPageSize = Config.readString("search.perPage")
 
   val doHighlighting = Config.readBoolean("search.highlight.dohighlight")
 
-  val senseiSvc = new ClusteredSenseiServiceImpl(zkurl,timeout,clusterName)
-  senseiSvc.start()
+  val tweetSearchSvc = new ClusteredSenseiServiceImpl(DefaultConfigs.zkurl,timeout,tweetClusterName)
+  tweetSearchSvc.start()
 
-  DefaultConfigs.addShutdownHook{ senseiSvc.shutdown }
+  val logSearchSvc = new ClusteredSenseiServiceImpl(DefaultConfigs.zkurl,timeout,logClusterName)
+  logSearchSvc.start()
+
+  DefaultConfigs.addShutdownHook{ tweetSearchSvc.shutdown; logSearchSvc.shutdown }
 
   before {
     t1 = System.currentTimeMillis()
@@ -66,6 +69,55 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
   get("/") {
     contentType = "text/html"
     templateEngine.layout("index.ssp")
+  }
+
+  get("/logs"){
+	val start = System.currentTimeMillis()
+	// params
+	var q = params.getOrElse("q", "")
+	val offset = params.getOrElse("offset", "0").toInt
+	val count = params.getOrElse("count", defaultPageSize).toInt
+
+	// Build a search request
+	val req = new SenseiRequest()
+	// Paging
+	req.setOffset(offset)
+	req.setCount(count)
+	req.setFetchStoredFields(true)
+
+	var highlightScorer : Option[QueryScorer] = None
+	// Parse a query
+	if (q != null) {
+	  q = q.trim()
+	  if (q.length>1){
+	      try {
+	        val sq = new StringQuery(q)
+	        req.setQuery(sq)
+	        if (doHighlighting && q.length()>2){
+	          val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
+	          highlightScorer = Some(new QueryScorer(luceneQ))
+            }
+	      } catch {
+	        case e: Exception => e.printStackTrace()
+	      }
+	  }
+	}
+
+	// sort by time
+	req.addSortField(new SortField("time", SortField.CUSTOM, true))
+
+	// do search
+	val searchStart = System.currentTimeMillis()
+	val results = logSearchSvc.doQuery(req) // no facets for this
+	val searchEnd = System.currentTimeMillis()
+
+	// build a json object
+	val resultJSON = DefaultSenseiJSONServlet.buildJSONResult(req,results)
+
+	val end = System.currentTimeMillis()
+	resultJSON.put("searchtime",(searchEnd-searchStart))
+	resultJSON.put("totaltime",(end-start))
+	resultJSON.toString()
   }
 
   get("/search"){
@@ -106,7 +158,7 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	
 	// do search
 	val searchStart = System.currentTimeMillis()
-	val results = senseiSvc.doQuery(req) // no facets for this
+	val results = tweetSearchSvc.doQuery(req) // no facets for this
 	val searchEnd = System.currentTimeMillis()
 	
 	// build a json object

@@ -27,19 +27,19 @@ import com.sensei.search.nodes.impl._
 object LogSearchNode{
 	def main(args: Array[String]) = {
 	
-	  val nodeid = Config.readInt("log.search.node.id")
-	  val port = Config.readInt("log.search.node.port")
-	  val partList = Config.readString("log.search.node.partitions")
+	  val nodeid = Config.readInt("chopchop.search.node.id")
+	  val port = Config.readInt("chopchop.search.node.port")
+	  val partList = Config.readString("chopchop.search.node.partitions")
 	
 	  // where to put the index
-	  val idxDir = new File(Config.readString("log.search.node.index.dir"))
+	  val idxDir = new File(Config.readString("chopchop.search.node.index.dir"))
 	
 	  // rolls daily at midnight, keep 7 days
 	  val hfFactory = new SenseiHourglassFactory[JSONObject, DefaultZoieVersion](idxDir,LogSearchConfig.logIndexInterpreter,
                           new SenseiIndexReaderDecorator(LogSearchConfig.logHandlerList,null), 
 	                      DefaultConfigs.zoieConfig, "00 00 00", 7, FREQUENCY.DAILY)
 	
-	  val clusterName = Config.readString("log.zookeeper.cluster")
+	  val clusterName = Config.readString("chopchop.zookeeper.cluster")
 
       // zookeeper cluster client
       val clusterClient = new ZooKeeperClusterClient(clusterName,DefaultConfigs.zkurl,DefaultConfigs.timeout);
