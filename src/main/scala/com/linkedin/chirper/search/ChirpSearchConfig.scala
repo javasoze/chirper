@@ -15,8 +15,9 @@ import com.sensei.dataprovider.kafka.KafkaStreamIndexLoaderFactory.DefaultJsonFa
 object ChirpSearchConfig{
 	// kafka config
 	val kafkatopic = Config.readString("tweet.kafka.topic")
+	val batch = Config.readInt("tweet.search.node.index.batch")
 	
-	val tweetIndexLoaderFactory = new DefaultJsonFactory(DefaultConfigs.kafkahost,DefaultConfigs.kafkaport,kafkatopic,DefaultConfigs.batch,30000)
+	val tweetIndexLoaderFactory = new DefaultJsonFactory(DefaultConfigs.kafkahost,DefaultConfigs.kafkaport,kafkatopic,batch,30000)
 	
 	// how do we convert an indexing event, in this case a json obj, into a lucene document
 	val interpreter = new ChirpJSONInterpreter()

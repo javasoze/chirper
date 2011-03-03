@@ -22,8 +22,6 @@ object DefaultConfigs{
 	val kafkahost = Config.readString("kafka.host")
 	val kafkaport = Config.readInt("kafka.port")
 	
-	val batch = Config.readInt("search.node.index.batch")
-	
 	// zookeeper settings
 	val zkurl = Config.readString("zookeeper.url")
 	val timeout = 30000
