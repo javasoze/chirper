@@ -23,6 +23,9 @@ import org.json._
 import org.apache.lucene.search.highlight._
 import org.apache.commons.lang.StringEscapeUtils
 
+import org.apache.commons.configuration.DataConfiguration
+import org.apache.commons.configuration.web.ServletRequestConfiguration
+
 import net.lag.logging.Logger
 
 class ChirperServlet extends ScalatraServlet with ScalateSupport {
@@ -73,38 +76,28 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 
   get("/logs"){
 	val start = System.currentTimeMillis()
-	// params
-	var q = params.getOrElse("q", "")
-	val offset = params.getOrElse("offset", "0").toInt
-	val count = params.getOrElse("count", defaultPageSize).toInt
-
-	// Build a search request
-	val req = new SenseiRequest()
-	// Paging
-	req.setOffset(offset)
-	req.setCount(count)
-	req.setFetchStoredFields(true)
-
+	
+	
 	var highlightScorer : Option[QueryScorer] = None
-	// Parse a query
-	if (q != null) {
-	  q = q.trim()
-	  if (q.length>1){
+	
+	val req = DefaultSenseiJSONServlet.convertSenseiRequest(new DataConfiguration(new ServletRequestConfiguration(request)))
+	
+	
+	// sort by time
+	req.addSortField(new SortField("time", SortField.CUSTOM, true))
+
+	// params
+	var q = params.getOrElse("q", "").trim()
+	
+	  if (doHighlighting && q.length()>2){
 	      try {
-	        val sq = new StringQuery(q)
-	        req.setQuery(sq)
-	        if (doHighlighting && q.length()>2){
-	          val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
-	          highlightScorer = Some(new QueryScorer(luceneQ))
-            }
-	      } catch {
+	        val sq = req.getQuery()
+	        val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
+	        highlightScorer = Some(new QueryScorer(luceneQ))
+          } catch {
 	        case e: Exception => e.printStackTrace()
 	      }
 	  }
-	}
-
-	// sort by time
-	req.addSortField(new SortField("time", SortField.CUSTOM, true))
 
 	// do search
 	val searchStart = System.currentTimeMillis()
@@ -124,37 +117,26 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	log.info(request.getQueryString)
 	val start = System.currentTimeMillis()
 	// params
-	var q = params.getOrElse("q", "")
-	val offset = params.getOrElse("offset", "0").toInt
-	val count = params.getOrElse("count", defaultPageSize).toInt
+	var q = params.getOrElse("q", "").trim()
 	
-	// Build a search request
-	val req = new SenseiRequest()
-	// Paging
-	req.setOffset(offset)
-	req.setCount(count)
+	val req = DefaultSenseiJSONServlet.convertSenseiRequest(new DataConfiguration(new ServletRequestConfiguration(request)))
+	
+	// sort by time
+	req.addSortField(new SortField("time", SortField.CUSTOM, true))
+	
 	req.setFetchStoredFields(false)
 	
 	var highlightScorer : Option[QueryScorer] = None
 	// Parse a query
-	if (q != null) {
-	  q = q.trim()
-	  if (q.length>1){
+	  if (doHighlighting && q.length()>2){
 	      try {
-	        val sq = new StringQuery(q)
-	        req.setQuery(sq)
-	        if (doHighlighting && q.length()>2){
-	          val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
-	          highlightScorer = Some(new QueryScorer(luceneQ))
-            }
+	        val sq = req.getQuery()
+	        val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
+	        highlightScorer = Some(new QueryScorer(luceneQ))
 	      } catch {
 	        case e: Exception => e.printStackTrace()
 	      }
 	  }
-	}
-	
-	// sort by time
-	req.addSortField(new SortField("time", SortField.CUSTOM, true))
 	
 	// do search
 	val searchStart = System.currentTimeMillis()

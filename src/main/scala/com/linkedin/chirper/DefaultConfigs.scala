@@ -14,7 +14,7 @@ import org.apache.lucene.queryParser.QueryParser.Operator
 import org.apache.lucene.util.Version
 
 import com.sensei.search.nodes.SenseiQueryBuilderFactory
-import com.sensei.search.nodes.impl.SimpleQueryBuilderFactory
+import com.sensei.search.nodes.impl.DefaultJsonQueryBuilderFactory
 
 object DefaultConfigs{
 	val UTF8Charset = Charset.forName("UTF-8")
@@ -36,7 +36,7 @@ object DefaultConfigs{
 	// define query parser builder
 	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
 	queryParser.setDefaultOperator(Operator.AND)
-	val queryBuilderFactory = new SimpleQueryBuilderFactory(queryParser)
+	val queryBuilderFactory = new DefaultJsonQueryBuilderFactory(queryParser)
 	
 	// highlighting
 	val formatter = new org.apache.lucene.search.highlight.SimpleHTMLFormatter(Config.readString("search.highlight.pretag"),Config.readString("search.highlight.posttag"))
