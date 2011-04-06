@@ -26,7 +26,7 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
 
   val netty = "org.jboss.netty" % "netty" % "3.2.3.Final" % "runtime"
-  val spring = "org.springframework" % "spring" % "2.5.5" % "runtime"
+  val spring = "org.springframework" % "spring" % "2.5.5" % "compile"
 // Logging
   System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
   // System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");

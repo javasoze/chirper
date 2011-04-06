@@ -12,7 +12,7 @@ import org.fusesource.scalate._
 import org.fusesource.scalate.TemplateEngine
 import com.sensei.search.req.SenseiRequest
 import com.sensei.search.req.StringQuery
-import com.sensei.search.svc.impl.ClusteredSenseiServiceImpl
+import com.sensei.search.svc.api.SenseiService
 import com.sensei.search.client.servlet.DefaultSenseiJSONServlet
 import voldemort.scalmert.client.StoreClient
 import voldemort.client.ClientConfig
@@ -20,6 +20,7 @@ import voldemort.client.SocketStoreClientFactory
 import voldemort.scalmert.Implicits._
 import voldemort.scalmert.versioning._
 import org.json._
+import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean
 import org.apache.lucene.search.highlight._
 import org.apache.commons.lang.StringEscapeUtils
 
@@ -28,16 +29,16 @@ import org.apache.commons.configuration.web.ServletRequestConfiguration
 
 import net.lag.logging.Logger
 
+object ChirperServlet{
+	val logger = org.apache.log4j.Logger.getLogger(classOf[ChirperServlet]);
+}
+
 class ChirperServlet extends ScalatraServlet with ScalateSupport {
   var t1: Long = 0
   var t2: Long = 0
 
   val log = Logger.get
 
-  val tweetClusterName = Config.readString("tweet.zookeeper.cluster")
-  val logClusterName = Config.readString("chopchop.zookeeper.cluster")
-
-  val timeout = 30000
 
   val voldemortStore = Config.readString("tweet.voldemort.store")
 
@@ -48,13 +49,12 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 
   val doHighlighting = Config.readBoolean("search.highlight.dohighlight")
 
-  val tweetSearchSvc = new ClusteredSenseiServiceImpl(DefaultConfigs.zkurl,timeout,tweetClusterName)
-  tweetSearchSvc.start()
 
-  val logSearchSvc = new ClusteredSenseiServiceImpl(DefaultConfigs.zkurl,timeout,logClusterName)
-  logSearchSvc.start()
-
-  DefaultConfigs.addShutdownHook{ tweetSearchSvc.shutdown; logSearchSvc.shutdown }
+  val springInvokerBean = new HttpInvokerProxyFactoryBean()
+  springInvokerBean.setServiceUrl(Config.readString("sensei.search.spring.url"))
+  springInvokerBean.setServiceInterface(classOf[SenseiService])
+  springInvokerBean.afterPropertiesSet()
+  val tweetSearchSvc = springInvokerBean.getObject().asInstanceOf[SenseiService]
 
   before {
     t1 = System.currentTimeMillis()
@@ -74,47 +74,8 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
     templateEngine.layout("index.ssp")
   }
 
-  get("/logs"){
-	val start = System.currentTimeMillis()
-	
-	
-	var highlightScorer : Option[QueryScorer] = None
-	
-	val req = DefaultSenseiJSONServlet.convertSenseiRequest(new DataConfiguration(new ServletRequestConfiguration(request)))
-	
-	
-	// sort by time
-	req.addSortField(new SortField("time", SortField.CUSTOM, true))
-
-	// params
-	var q = params.getOrElse("q", "").trim()
-	
-	  if (doHighlighting && q.length()>2){
-	      try {
-	        val sq = req.getQuery()
-	        val luceneQ = DefaultConfigs.queryBuilderFactory.getQueryBuilder(sq).buildQuery()
-	        highlightScorer = Some(new QueryScorer(luceneQ))
-          } catch {
-	        case e: Exception => e.printStackTrace()
-	      }
-	  }
-
-	// do search
-	val searchStart = System.currentTimeMillis()
-	val results = logSearchSvc.doQuery(req) // no facets for this
-	val searchEnd = System.currentTimeMillis()
-
-	// build a json object
-	val resultJSON = DefaultSenseiJSONServlet.buildJSONResult(req,results)
-
-	val end = System.currentTimeMillis()
-	resultJSON.put("searchtime",(searchEnd-searchStart))
-	resultJSON.put("totaltime",(end-start))
-	resultJSON.toString()
-  }
-
   get("/search"){
-	log.info(request.getQueryString)
+	//log.info(request.getQueryString)
 	val start = System.currentTimeMillis()
 	// params
 	var q = params.getOrElse("q", "").trim()
@@ -183,9 +144,14 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	}
 	val fetchEnd = System.currentTimeMillis()
 	val end = System.currentTimeMillis()
+	
+	
+	ChirperServlet.logger.info(request.getQueryString+" took: "+(end-start)+"ms")
+	
 	resultJSON.put("fetchtime",(fetchEnd-fetchStart))
 	resultJSON.put("searchtime",(searchEnd-searchStart))
 	resultJSON.put("totaltime",(end-start))
 	resultJSON.toString()
+	
   }
 }

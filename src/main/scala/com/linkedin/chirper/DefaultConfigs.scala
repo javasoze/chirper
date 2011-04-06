@@ -36,7 +36,8 @@ object DefaultConfigs{
 	// define query parser builder
 	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
 	queryParser.setDefaultOperator(Operator.AND)
-	val queryBuilderFactory = new DefaultJsonQueryBuilderFactory(queryParser)
+	
+	val queryBuilderFactory = new com.linkedin.chirper.search.ChirperQueryBuilderFactor()
 	
 	// highlighting
 	val formatter = new org.apache.lucene.search.highlight.SimpleHTMLFormatter(Config.readString("search.highlight.pretag"),Config.readString("search.highlight.posttag"))
