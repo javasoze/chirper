@@ -22,10 +22,6 @@ object DefaultConfigs{
 	val kafkahost = Config.readString("kafka.host")
 	val kafkaport = Config.readInt("kafka.port")
 	
-	// zookeeper settings
-	val zkurl = Config.readString("zookeeper.url")
-	val timeout = 30000
-	
 	// zoie configuration, use default
 	val zoieConfig = new ZoieConfig[DefaultZoieVersion](new DefaultZoieVersionFactory());
 	
@@ -37,7 +33,7 @@ object DefaultConfigs{
 	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
 	queryParser.setDefaultOperator(Operator.AND)
 	
-	val queryBuilderFactory = new com.linkedin.chirper.search.ChirperQueryBuilderFactor()
+	val queryBuilderFactory = new com.linkedin.chirper.search.ChirperQueryBuilderFactory()
 	
 	// highlighting
 	val formatter = new org.apache.lucene.search.highlight.SimpleHTMLFormatter(Config.readString("search.highlight.pretag"),Config.readString("search.highlight.posttag"))

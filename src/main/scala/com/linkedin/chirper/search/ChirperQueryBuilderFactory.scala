@@ -8,5 +8,5 @@ import org.apache.lucene.util.Version
 import com.sensei.search.nodes.impl.DefaultJsonQueryBuilderFactory
 import com.linkedin.chirper.DefaultConfigs
 
-class ChirperQueryBuilderFactor extends DefaultJsonQueryBuilderFactory(DefaultConfigs.queryParser){
+class ChirperQueryBuilderFactory extends DefaultJsonQueryBuilderFactory(DefaultConfigs.queryParser){
 }
