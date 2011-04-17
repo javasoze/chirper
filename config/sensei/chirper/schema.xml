@@ -17,7 +17,7 @@
 
   <table uid="id_str" delete-field="" skip-field="">
 	<column name="time" type="long" />
-	<column name="contents" type="text" index="ANALYZED" store="NO" termvector="NO" />
+	<column name="text" type="text" index="ANALYZED" store="NO" termvector="NO" />
   </table>
 
    <!-- 

@@ -113,10 +113,11 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 	while (i < hitsArrayLen){
 	  val hit = hitsArray.getJSONObject(i)
 	  val uid = hit.getString("uid")
-	  val statusString = tweetStore(uid)
-	  var statusJsonObj = new JSONObject();
-	  if (statusString!=null){
-		try{
+	  try{
+	    val statusString = tweetStore(uid)
+	    var statusJsonObj = new JSONObject();
+	    if (statusString!=null){
+		
 		  // go to voldemort store to get the original tweet text for display
 		  val voldObj = new JSONObject(statusString)
 		  val tweetString = voldObj.getString("value")
@@ -134,13 +135,14 @@ class ChirperServlet extends ScalatraServlet with ScalateSupport {
 		     }
 		     case _	=>
 		  }
-		}
-		catch{
-		  case e : Exception => e.printStackTrace()
-		}
-		hit.put("status",statusJsonObj)
-	  }
-	  i+=1
+	
+		  hit.put("status",statusJsonObj)
+	    }
+	   }
+	   catch{
+	     case e : Exception => e.printStackTrace()
+	   }
+	   i+=1
 	}
 	val fetchEnd = System.currentTimeMillis()
 	val end = System.currentTimeMillis()

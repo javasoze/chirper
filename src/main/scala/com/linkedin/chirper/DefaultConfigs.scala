@@ -30,7 +30,7 @@ object DefaultConfigs{
 	
 	// query builder
 	// define query parser builder
-	val queryParser = new QueryParser(Version.LUCENE_29,"contents",new StandardAnalyzer(Version.LUCENE_29))
+	val queryParser = new QueryParser(Version.LUCENE_29,"text",new StandardAnalyzer(Version.LUCENE_29))
 	queryParser.setDefaultOperator(Operator.AND)
 	
 	val queryBuilderFactory = new com.linkedin.chirper.search.ChirperQueryBuilderFactory()
