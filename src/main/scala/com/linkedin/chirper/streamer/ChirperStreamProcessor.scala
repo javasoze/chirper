@@ -13,7 +13,7 @@ import com.linkedin.led.twitter.streaming.StreamProcessor
 
 import kafka.message._
 import kafka.producer._
-
+import org.apache.log4j.Logger
 import voldemort.scalmert.client.StoreClient
 import voldemort.client.{SocketStoreClientFactory,ClientConfig}
 import voldemort.scalmert.Implicits._
@@ -22,6 +22,8 @@ import com.linkedin.chirper.DefaultConfigs
 
 // processes each tweet from the streamer
 class ChirperStreamProcessor extends StreamProcessor{
+
+    val log = Logger.getLogger(classOf[ChirperStreamProcessor])
 
 	val kafkaTopic = Config.readString("tweet.kafka.topic")
 	val voldemortStore = Config.readString("tweet.voldemort.store")
@@ -42,18 +44,20 @@ class ChirperStreamProcessor extends StreamProcessor{
 		// for each tweet
 		try{
 		  // output to console
-		  println(line)
+		 /// println(line)
 		  val jsonObj = new JSONObject(line)
-		  val id = jsonObj.getString("id_str")
+  		  val id = jsonObj.getString("id_str")
 		  // send to voldemort store
 		  tweetStore(id) = line
-		
+		  
+		  val tweetString = tweetStore.get(id)
+		  log.debug("tweetid: "+id)
 		  // send to kafka
 	      kafkaProducer.send(kafkaTopic,new ByteBufferMessageSet(new Message(line.getBytes(DefaultConfigs.UTF8Charset))))
 	      
         }
         catch{
-	      case je: JSONException => 
+	      case je: JSONException => je.printStackTrace()
 	      case e: Exception => e.printStackTrace()
         }
         line = reader.readLine()

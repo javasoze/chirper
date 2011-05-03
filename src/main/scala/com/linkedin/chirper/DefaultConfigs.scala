@@ -3,8 +3,6 @@ package com.linkedin.chirper;
 import com.linkedin.led.twitter.config._
 
 import java.nio.charset.Charset
-import proj.zoie.api.DefaultZoieVersion
-import proj.zoie.api.DefaultZoieVersion.DefaultZoieVersionFactory
 import proj.zoie.impl.indexing.ZoieConfig
 
 
@@ -23,7 +21,7 @@ object DefaultConfigs{
 	val kafkaport = Config.readInt("kafka.port")
 	
 	// zoie configuration, use default
-	val zoieConfig = new ZoieConfig[DefaultZoieVersion](new DefaultZoieVersionFactory());
+	val zoieConfig = new ZoieConfig();
 	
 	// voldemort configuration
 	val voldemortUrl = Config.readString("voldemort.url")

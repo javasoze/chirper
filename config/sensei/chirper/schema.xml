@@ -15,7 +15,7 @@
     text - searchable
   -->
 
-  <table uid="id_str" delete-field="" skip-field="">
+  <table uid="id" delete-field="" skip-field="">
 	<column name="time" type="long" />
 	<column name="text" type="text" index="ANALYZED" store="NO" termvector="NO" />
   </table>

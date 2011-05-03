@@ -20,9 +20,9 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val googleCollections = "com.google.collections" % "google-collections" % "1.0" % "runtime"
 
   val fastutil = "fastutil" % "fastutil" % "5.0.5"
-  val lucene = "org.apache.lucene" % "lucene-core" % "2.9.1"
-  val luceneHighlighter = "org.apache.lucene" % "lucene-highlighter" % "2.9.1"
-  val kamikaze = "com.sna-projects.kamikaze" % "kamikaze" % "3.0.3" % "runtime"
+  val lucene = "org.apache.lucene" % "lucene-core" % "3.0.2"
+  val luceneHighlighter = "org.apache.lucene" % "lucene-highlighter" % "3.0.2"
+  val kamikaze = "com.linkedin.kamikaze" % "kamikaze" % "3.0.4" % "runtime"
   val protobuf = "com.google.protobuf" % "protobuf-java" % "2.3.0"
 
   val netty = "org.jboss.netty" % "netty" % "3.2.3.Final" % "runtime"
