@@ -8,7 +8,6 @@ class ChirperStreamerProject(info: ProjectInfo) extends DefaultWebProject(info) 
   val logging    = "commons-logging" % "commons-logging" % "1.1"
   val json = "org.json" % "json" % "20080701"
   val scalaj_collection = "org.scalaj" %% "scalaj-collection" % "1.0"
-  val configgy   = "net.lag" % "configgy" % "1.5.2" from "http://repo.bumnetworks.com/snapshots/net/lag/configgy/1.5.2/configgy-1.5.2.jar"
 
   val commonsIo = "commons-io" % "commons-io" % "2.0.1" % "runtime"
   val commonsCollection = "commons-collections" % "commons-collections" % "3.2.1" % "runtime"
